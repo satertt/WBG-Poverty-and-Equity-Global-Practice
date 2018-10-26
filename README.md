@@ -20,11 +20,10 @@ The pivot table (or pivot chart) will include the contribution of capital, labor
 ## 2 Advanced Stata skills, econometrics skills
 
 &emsp; The dta file predictLcons.dta is an artificial household survey database with unique values at the household level (hhid). The survey is stratified by region and a primary sample unit (psu). The data is composed of two types of variables. [1] Your variable of interest, the log of household consumption, and [2] a set of household characteristics (x1-x20) that, irrespectively of their qualitative interpretation, vary on type and distribution among themselves. Your task is simple: estimate up to five models to predict the log of consumption for those observations with missing values. We expect from you the following:
-[^1]: Well-organized Stata code with all the prediction models used.
-[^2]: Short .doc file explaining the econometric intuition of each model and why the best model outperform the others. We would need to assess your understanding of the relationship between variance and bias, margin of error, and accuracy. So, it would be ideal to know how the different models that you picked differ from each other in these aspects.
+1. Well-organized Stata code with all the prediction models used.
+2. Short .doc file explaining the econometric intuition of each model and why the best model outperform the others. We would need to assess your understanding of the relationship between variance and bias, margin of error, and accuracy. So, it would be ideal to know how the different models that you picked differ from each other in these aspects.
 
 &emsp; Things to keep in mind
-[^1]: Stata has a huge repository of official and user-written commands for prediction. Though using these commands is not discouraged, we value more your ability to code such statistical procedures by yourself. Of course, we don’t expect you to code a complete ado-file to predict missing values, but we would like to see your ability to code econometric procedures.
-[^1]: Coding in MATA is more efficient and desirable for this kind of procedure.
+Stata has a huge repository of official and user-written commands for prediction. Though using these commands is not discouraged, we value more your ability to code such statistical procedures by yourself. Of course, we don’t expect you to code a complete ado-file to predict missing values, but we would like to see your ability to code econometric procedures.; Coding in MATA is more efficient and desirable for this kind of procedure.
 
 
