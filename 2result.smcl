@@ -1,0 +1,2088 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\Administrator\OneDrive\World Bank\2result.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}22 Oct 2018, 18:26:58
+{txt}
+{com}. ********************************
+. * 2.2 Use the data from GitHub *
+. ******************************** 
+. use "https://raw.githubusercontent.com/satertt/WBG-Poverty-and-Equity-Global-Practice/master/predictLcons.dta", clear
+{txt}
+{com}. 
+. **************************
+. * 2.3 Summerize the data *
+. **************************
+. sum
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}hhid {c |}{res}      4,566      2283.5    1318.235          1       4566
+{txt}{space 6}region {c |}{res}      4,566    4.504161    2.287612          1          8
+{txt}{space 9}psu {c |}{res}      4,566    14.95379    8.353646          1         30
+{txt}{space 10}x1 {c |}{res}      4,566   -4.38e-06    4.071398  -13.49177   13.61758
+{txt}{space 10}x2 {c |}{res}      4,566    .0317249    2.980298  -9.664678   10.33607
+{txt}{hline 13}{c +}{hline 57}
+{space 10}x3 {c |}{res}      4,566    .6645497    3.409951  -13.01203   14.63057
+{txt}{space 10}x4 {c |}{res}      4,566    12.46018    52.27661  -258.7173   278.6981
+{txt}{space 10}x5 {c |}{res}      4,566   -.0007875    .2050263   -.963003   .7836116
+{txt}{space 10}x6 {c |}{res}      4,566    .7043364    .4563905          0          1
+{txt}{space 10}x7 {c |}{res}      4,566    .3929308    .2987074          0   .9333333
+{txt}{hline 13}{c +}{hline 57}
+{space 10}x8 {c |}{res}      4,566    .6905388    .4623222          0          1
+{txt}{space 10}x9 {c |}{res}      4,566    .5779676    .4939377          0          1
+{txt}{space 9}x10 {c |}{res}      4,566    .7032413    .4568793          0          1
+{txt}{space 9}x11 {c |}{res}      4,566    8.040736    4.282838          1         15
+{txt}{space 9}x12 {c |}{res}      4,566    12.37078    4.603567          5         20
+{txt}{hline 13}{c +}{hline 57}
+{space 9}x13 {c |}{res}      4,566    .3094612    .4623222          0          1
+{txt}{space 9}x14 {c |}{res}      4,566    .2996058    .4581355          0          1
+{txt}{space 9}x15 {c |}{res}      4,566    .2954446    .4562923          0          1
+{txt}{space 9}x16 {c |}{res}      4,566    .0954884    .2939205          0          1
+{txt}{space 9}x17 {c |}{res}      4,566    .9498467    .0202341   .8773006    .984985
+{txt}{hline 13}{c +}{hline 57}
+{space 9}x18 {c |}{res}      4,566    .6559622    .1021504   .2777778   .9565217
+{txt}{space 9}x19 {c |}{res}      4,566    .9649121    2.992592  -12.54071   12.10419
+{txt}{space 9}x20 {c |}{res}      4,566    .5162312    1.969401  -5.653044   8.649453
+{txt}{space 9}x21 {c |}{res}      4,566   -.0014577    .9918979  -3.501972   3.343275
+{txt}{space 6}lncons {c |}{res}      3,183    51.12646    11.30297   20.82203   81.20213
+{txt}
+{com}. 
+. * Notes: 1. The dataset contians 4,566 observations in 8 regions and 30 psu 
+. *        2. In all X (x1 - x20) varibales, there are 8 dummies and 12 conitunes variables
+. *        3. There is 1,383 missing value in "lncons" (4,566-3,183) 
+. 
+. ***********************************
+. * 2.4 Prediction model estimation *
+. ***********************************
+. 
+. ** 2.4.1 Model with all x variables (Model 1) **
+. 
+. drop x21
+{txt}
+{com}. ** Notes: x21 is dropped for the convinionce of coding
+. 
+. reg lncons  x*
+{txt}note: x13 omitted because of collinearity
+note: x16 omitted because of collinearity
+
+      Source {c |}       SS           df       MS      Number of obs   ={res}     3,183
+{txt}{hline 13}{c +}{hline 34}   F(18, 3164)     = {res} 21586.72
+{txt}       Model {c |} {res} 403239.514        18  22402.1952   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3283.52497     3,164  1.03777654   {txt}R-squared       ={res}    0.9919
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9919
+{txt}       Total {c |} {res} 406523.039     3,182  127.757083   {txt}Root MSE        =   {res} 1.0187
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}      lncons{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 10}x1 {c |}{col 14}{res}{space 2}-.0042392{col 26}{space 2} .0044449{col 37}{space 1}   -0.95{col 46}{space 3}0.340{col 54}{space 4}-.0129544{col 67}{space 3}  .004476
+{txt}{space 10}x2 {c |}{col 14}{res}{space 2} .0018193{col 26}{space 2} .0060543{col 37}{space 1}    0.30{col 46}{space 3}0.764{col 54}{space 4}-.0100514{col 67}{space 3}   .01369
+{txt}{space 10}x3 {c |}{col 14}{res}{space 2}-.0016467{col 26}{space 2} .0053588{col 37}{space 1}   -0.31{col 46}{space 3}0.759{col 54}{space 4}-.0121537{col 67}{space 3} .0088604
+{txt}{space 10}x4 {c |}{col 14}{res}{space 2} .0001008{col 26}{space 2} .0003513{col 37}{space 1}    0.29{col 46}{space 3}0.774{col 54}{space 4}-.0005881{col 67}{space 3} .0007897
+{txt}{space 10}x5 {c |}{col 14}{res}{space 2} .0797361{col 26}{space 2} .0881447{col 37}{space 1}    0.90{col 46}{space 3}0.366{col 54}{space 4}-.0930905{col 67}{space 3} .2525628
+{txt}{space 10}x6 {c |}{col 14}{res}{space 2} 1.977119{col 26}{space 2} .0399461{col 37}{space 1}   49.49{col 46}{space 3}0.000{col 54}{space 4} 1.898796{col 67}{space 3} 2.055442
+{txt}{space 10}x7 {c |}{col 14}{res}{space 2} .7852425{col 26}{space 2} .0646219{col 37}{space 1}   12.15{col 46}{space 3}0.000{col 54}{space 4} .6585375{col 67}{space 3} .9119475
+{txt}{space 10}x8 {c |}{col 14}{res}{space 2} .8315117{col 26}{space 2} .0666994{col 37}{space 1}   12.47{col 46}{space 3}0.000{col 54}{space 4} .7007333{col 67}{space 3} .9622901
+{txt}{space 10}x9 {c |}{col 14}{res}{space 2} -.503308{col 26}{space 2} .0366557{col 37}{space 1}  -13.73{col 46}{space 3}0.000{col 54}{space 4}-.5751793{col 67}{space 3}-.4314367
+{txt}{space 9}x10 {c |}{col 14}{res}{space 2} .7757489{col 26}{space 2} .0396597{col 37}{space 1}   19.56{col 46}{space 3}0.000{col 54}{space 4} .6979876{col 67}{space 3} .8535103
+{txt}{space 9}x11 {c |}{col 14}{res}{space 2}  1.99579{col 26}{space 2} .0044303{col 37}{space 1}  450.49{col 46}{space 3}0.000{col 54}{space 4} 1.987103{col 67}{space 3} 2.004476
+{txt}{space 9}x12 {c |}{col 14}{res}{space 2} 1.481482{col 26}{space 2} .0084413{col 37}{space 1}  175.51{col 46}{space 3}0.000{col 54}{space 4} 1.464931{col 67}{space 3} 1.498033
+{txt}{space 9}x13 {c |}{col 14}{res}{space 2}        0{col 26}{txt}  (omitted)
+{space 9}x14 {c |}{col 14}{res}{space 2} 1.499399{col 26}{space 2} .0671795{col 37}{space 1}   22.32{col 46}{space 3}0.000{col 54}{space 4} 1.367679{col 67}{space 3} 1.631118
+{txt}{space 9}x15 {c |}{col 14}{res}{space 2} 2.954089{col 26}{space 2} .0669757{col 37}{space 1}   44.11{col 46}{space 3}0.000{col 54}{space 4} 2.822769{col 67}{space 3} 3.085409
+{txt}{space 9}x16 {c |}{col 14}{res}{space 2}        0{col 26}{txt}  (omitted)
+{space 9}x17 {c |}{col 14}{res}{space 2}-3.434647{col 26}{space 2} 1.915606{col 37}{space 1}   -1.79{col 46}{space 3}0.073{col 54}{space 4}-7.190602{col 67}{space 3} .3213083
+{txt}{space 9}x18 {c |}{col 14}{res}{space 2} .1394218{col 26}{space 2} .1823191{col 37}{space 1}    0.76{col 46}{space 3}0.444{col 54}{space 4}-.2180538{col 67}{space 3} .4968975
+{txt}{space 9}x19 {c |}{col 14}{res}{space 2} .0027917{col 26}{space 2} .0060361{col 37}{space 1}    0.46{col 46}{space 3}0.644{col 54}{space 4}-.0090433{col 67}{space 3} .0146267
+{txt}{space 9}x20 {c |}{col 14}{res}{space 2}-.0048604{col 26}{space 2} .0092412{col 37}{space 1}   -0.53{col 46}{space 3}0.599{col 54}{space 4}-.0229798{col 67}{space 3}  .013259
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 16.05065{col 26}{space 2} 1.906577{col 37}{space 1}    8.42{col 46}{space 3}0.000{col 54}{space 4}  12.3124{col 67}{space 3} 19.78891
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. ** Notes: x13 and x16 are omitted due to collinearity. 
+. **        Next step we will drop X13 and x16
+. 
+. ********************************************************************************
+. 
+. ** 2.4.2 Model without x13 and x16 (Model 2) **
+. 
+. *** 2.4.2.1 Regression 
+. drop x13 x16
+{txt}
+{com}. reg lncons x*
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}     3,183
+{txt}{hline 13}{c +}{hline 34}   F(18, 3164)     = {res} 21586.72
+{txt}       Model {c |} {res} 403239.514        18  22402.1952   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3283.52497     3,164  1.03777654   {txt}R-squared       ={res}    0.9919
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9919
+{txt}       Total {c |} {res} 406523.039     3,182  127.757083   {txt}Root MSE        =   {res} 1.0187
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}      lncons{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 10}x1 {c |}{col 14}{res}{space 2}-.0042392{col 26}{space 2} .0044449{col 37}{space 1}   -0.95{col 46}{space 3}0.340{col 54}{space 4}-.0129544{col 67}{space 3}  .004476
+{txt}{space 10}x2 {c |}{col 14}{res}{space 2} .0018193{col 26}{space 2} .0060543{col 37}{space 1}    0.30{col 46}{space 3}0.764{col 54}{space 4}-.0100514{col 67}{space 3}   .01369
+{txt}{space 10}x3 {c |}{col 14}{res}{space 2}-.0016467{col 26}{space 2} .0053588{col 37}{space 1}   -0.31{col 46}{space 3}0.759{col 54}{space 4}-.0121537{col 67}{space 3} .0088604
+{txt}{space 10}x4 {c |}{col 14}{res}{space 2} .0001008{col 26}{space 2} .0003513{col 37}{space 1}    0.29{col 46}{space 3}0.774{col 54}{space 4}-.0005881{col 67}{space 3} .0007897
+{txt}{space 10}x5 {c |}{col 14}{res}{space 2} .0797361{col 26}{space 2} .0881447{col 37}{space 1}    0.90{col 46}{space 3}0.366{col 54}{space 4}-.0930905{col 67}{space 3} .2525628
+{txt}{space 10}x6 {c |}{col 14}{res}{space 2} 1.977119{col 26}{space 2} .0399461{col 37}{space 1}   49.49{col 46}{space 3}0.000{col 54}{space 4} 1.898796{col 67}{space 3} 2.055442
+{txt}{space 10}x7 {c |}{col 14}{res}{space 2} .7852425{col 26}{space 2} .0646219{col 37}{space 1}   12.15{col 46}{space 3}0.000{col 54}{space 4} .6585375{col 67}{space 3} .9119475
+{txt}{space 10}x8 {c |}{col 14}{res}{space 2} .8315117{col 26}{space 2} .0666994{col 37}{space 1}   12.47{col 46}{space 3}0.000{col 54}{space 4} .7007333{col 67}{space 3} .9622901
+{txt}{space 10}x9 {c |}{col 14}{res}{space 2} -.503308{col 26}{space 2} .0366557{col 37}{space 1}  -13.73{col 46}{space 3}0.000{col 54}{space 4}-.5751793{col 67}{space 3}-.4314367
+{txt}{space 9}x10 {c |}{col 14}{res}{space 2} .7757489{col 26}{space 2} .0396597{col 37}{space 1}   19.56{col 46}{space 3}0.000{col 54}{space 4} .6979876{col 67}{space 3} .8535103
+{txt}{space 9}x11 {c |}{col 14}{res}{space 2}  1.99579{col 26}{space 2} .0044303{col 37}{space 1}  450.49{col 46}{space 3}0.000{col 54}{space 4} 1.987103{col 67}{space 3} 2.004476
+{txt}{space 9}x12 {c |}{col 14}{res}{space 2} 1.481482{col 26}{space 2} .0084413{col 37}{space 1}  175.51{col 46}{space 3}0.000{col 54}{space 4} 1.464931{col 67}{space 3} 1.498033
+{txt}{space 9}x14 {c |}{col 14}{res}{space 2} 1.499399{col 26}{space 2} .0671795{col 37}{space 1}   22.32{col 46}{space 3}0.000{col 54}{space 4} 1.367679{col 67}{space 3} 1.631118
+{txt}{space 9}x15 {c |}{col 14}{res}{space 2} 2.954089{col 26}{space 2} .0669757{col 37}{space 1}   44.11{col 46}{space 3}0.000{col 54}{space 4} 2.822769{col 67}{space 3} 3.085409
+{txt}{space 9}x17 {c |}{col 14}{res}{space 2}-3.434647{col 26}{space 2} 1.915606{col 37}{space 1}   -1.79{col 46}{space 3}0.073{col 54}{space 4}-7.190602{col 67}{space 3} .3213083
+{txt}{space 9}x18 {c |}{col 14}{res}{space 2} .1394218{col 26}{space 2} .1823191{col 37}{space 1}    0.76{col 46}{space 3}0.444{col 54}{space 4}-.2180538{col 67}{space 3} .4968975
+{txt}{space 9}x19 {c |}{col 14}{res}{space 2} .0027917{col 26}{space 2} .0060361{col 37}{space 1}    0.46{col 46}{space 3}0.644{col 54}{space 4}-.0090433{col 67}{space 3} .0146267
+{txt}{space 9}x20 {c |}{col 14}{res}{space 2}-.0048604{col 26}{space 2} .0092412{col 37}{space 1}   -0.53{col 46}{space 3}0.599{col 54}{space 4}-.0229798{col 67}{space 3}  .013259
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 16.05065{col 26}{space 2} 1.906577{col 37}{space 1}    8.42{col 46}{space 3}0.000{col 54}{space 4}  12.3124{col 67}{space 3} 19.78891
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. estat ic
+
+Akaike's information criterion and Bayesian information criterion
+
+{txt}{hline 13}{c TT}{hline 63}
+       Model {c |}        Obs  ll(null)  ll(model)      df         AIC        BIC
+{hline 13}{c +}{hline 63}
+{ralign 12:.}{col 14}{c |}{res}{col 16}     3,183{col 27}-12234.96{col 38}-4565.966{col 49}    19{col 58} 9169.933{col 69} 9285.179
+{txt}{hline 13}{c BT}{hline 63}
+{p 15 21 2}
+Note: N=Obs used in calculating BIC; see {helpb bic_note:[R] BIC note}.
+{p_end}
+
+{com}. 
+. *** 2.4.2.2 Regression Dianostics
+. 
+. *** Check multicollinearity
+. vif
+
+{txt}    Variable {c |}       VIF       1/VIF  
+{hline 13}{c +}{hline 22}
+{space 9}x12 {c |} {res}     4.68    0.213459
+{txt}{space 9}x17 {c |} {res}     4.67    0.214209
+{txt}{space 10}x8 {c |} {res}     2.92    0.341998
+{txt}{space 9}x15 {c |} {res}     2.89    0.345882
+{txt}{space 9}x14 {c |} {res}     2.86    0.349541
+{txt}{space 10}x7 {c |} {res}     1.12    0.891854
+{txt}{space 9}x11 {c |} {res}     1.12    0.895676
+{txt}{space 10}x3 {c |} {res}     1.02    0.978292
+{txt}{space 10}x6 {c |} {res}     1.02    0.980011
+{txt}{space 10}x4 {c |} {res}     1.01    0.985853
+{txt}{space 9}x18 {c |} {res}     1.01    0.988899
+{txt}{space 10}x1 {c |} {res}     1.01    0.992233
+{txt}{space 9}x10 {c |} {res}     1.01    0.992396
+{txt}{space 10}x2 {c |} {res}     1.01    0.992543
+{txt}{space 10}x5 {c |} {res}     1.01    0.993285
+{txt}{space 10}x9 {c |} {res}     1.01    0.994666
+{txt}{space 9}x19 {c |} {res}     1.00    0.995648
+{txt}{space 9}x20 {c |} {res}     1.00    0.995922
+{txt}{hline 13}{c +}{hline 22}
+    Mean VIF {c |} {res}     1.74
+{txt}
+{com}. 
+. *** Check Model Specification
+. linktest
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}     3,183
+{txt}{hline 13}{c +}{hline 34}   F(2, 3180)      > {res} 99999.00
+{txt}       Model {c |} {res} 403240.138         2  201620.069   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3282.90087     3,180  1.03235876   {txt}R-squared       ={res}    0.9919
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9919
+{txt}       Total {c |} {res} 406523.039     3,182  127.757083   {txt}Root MSE        =   {res} 1.0161
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}      lncons{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}_hat {c |}{col 14}{res}{space 2} 1.009452{col 26}{space 2} .0122607{col 37}{space 1}   82.33{col 46}{space 3}0.000{col 54}{space 4} .9854122{col 67}{space 3} 1.033491
+{txt}{space 6}_hatsq {c |}{col 14}{res}{space 2}-.0000929{col 26}{space 2} .0001194{col 37}{space 1}   -0.78{col 46}{space 3}0.437{col 54}{space 4} -.000327{col 67}{space 3} .0001413
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-.2287713{col 26}{space 2} .3059099{col 37}{space 1}   -0.75{col 46}{space 3}0.455{col 54}{space 4} -.828572{col 67}{space 3} .3710294
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. ovtest
+
+{txt}Ramsey RESET test using powers of the fitted values of lncons
+       Ho:  model has no omitted variables
+                F(3, 3161) = {res}     1.97
+                  {txt}Prob > F =      {res}0.1160
+{txt}
+{com}. 
+. *** check heteroskedasticity
+. estat hettest
+
+{txt}Breusch-Pagan / Cook-Weisberg test for heteroskedasticity 
+         Ho: Constant variance
+{p 9 20}Variables: fitted values of lncons
+
+{col 10}chi2({res}1{txt}){col 23}={res}     1.70
+{txt}{col 10}Prob > chi2{col 23}={res}   0.1926
+{txt}
+{com}. 
+. *** Checking Normality of Residuals
+. predict r, resid
+{txt}(1,383 missing values generated)
+
+{com}. kdensity r, normal name(kdensity1)
+{res}{txt}
+{com}. pnorm r, name(pnorm1)
+{res}{txt}
+{com}. qnorm r, name(qnorm1)
+{res}{txt}
+{com}. swilk r
+
+                   {txt}Shapiro-Wilk W test for normal data
+
+    Variable {c |}        Obs{col 33}W{col 45}V{col 55}z       Prob>z
+{hline 13}{c +}{hline 54}
+           r {c |} {res}     3,183    0.99883      2.120     1.942    0.02605
+{txt}
+{com}. 
+. *** Notes: We will further test the multicollinearity, and generate an alternative prediction model
+. 
+. ********************************************************************************
+. 
+. ** 2.4.3 alternative prediction model (trail 1)
+. 
+. use "https://raw.githubusercontent.com/satertt/WBG-Poverty-and-Equity-Global-Practice/master/predictLcons.dta", clear
+{txt}
+{com}. 
+. *** 2.4.3.1 Test collinearity for all x variables 
+. collin x*
+{txt}(obs=4,566)
+
+  Collinearity Diagnostics
+
+                        SQRT                   R-
+  Variable      VIF     VIF    Tolerance    Squared
+----------------------------------------------------
+        {res}x1      1.01    1.00    0.9947      0.0053
+        x2      1.00    1.00    0.9957      0.0043
+        x3      1.02    1.01    0.9785      0.0215
+        x4      1.01    1.01    0.9878      0.0122
+        x5      1.01    1.00    0.9949      0.0051
+        x6      1.02    1.01    0.9789      0.0211
+        x7      1.12    1.06    0.8947      0.1053
+        x8  1.17e+16 1.1e+08    0.0000      1.0000
+        x9      1.00    1.00    0.9963      0.0037
+       x10      1.00    1.00    0.9965      0.0035
+       x11      1.12    1.06    0.8968      0.1032
+       x12      4.62    2.15    0.2165      0.7835
+       x13  1.30e+16 1.1e+08    0.0000      1.0000
+       x14      1.14    1.07    0.8797      0.1203
+       x15      0.24    0.49    4.2491     -3.2491
+       x16      0.64    0.80    1.5715     -0.5715
+       x17      4.61    2.15    0.2171      0.7829
+       x18      1.01    1.01    0.9867      0.0133
+       x19      1.00    1.00    0.9959      0.0041
+       x20      1.00    1.00    0.9968      0.0032
+       x21      1.00    1.00    0.9965      0.0035
+{txt}----------------------------------------------------
+  Mean VIF{res}  1.18e+15
+
+{txt}                           Cond
+        Eigenval          Index
+---------------------------------
+{res}    1     9.3951          1.0000
+    2     1.2952          2.6933
+    3     1.0548          2.9845
+    4     1.0367          3.0105
+    5     1.0246          3.0281
+    6     1.0109          3.0486
+    7     0.9875          3.0845
+    8     0.9529          3.1399
+    9     0.9453          3.1526
+    10     0.9361          3.1680
+    11     0.9052          3.2217
+    12     0.8745          3.2777
+    13     0.4300          4.6743
+    14     0.3480          5.1956
+    15     0.2898          5.6938
+    16     0.2299          6.3921
+    17     0.1678          7.4817
+    18     0.0977          9.8080
+    19     0.0180         22.8255
+    20     0.0001        370.0757
+    21    -0.0000               .
+    22    -0.0000               .
+{txt}---------------------------------
+ Condition Number{res}              . 
+{txt} Eigenvalues & Cond Index computed from scaled raw sscp (w/ intercept)
+ Det(correlation matrix){res}   -0.0000
+{txt}
+{com}. *** Notes: VIF for x8 and x13 are iregular, so in alternative model they will be dropped.
+. 
+. *** 2.4.3.2 Model without x8 and x13 (Model 3) ***
+. drop x8 x13 x21
+{txt}
+{com}. reg lncons x*
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}     3,183
+{txt}{hline 13}{c +}{hline 34}   F(18, 3164)     = {res} 21586.72
+{txt}       Model {c |} {res} 403239.514        18  22402.1952   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3283.52497     3,164  1.03777654   {txt}R-squared       ={res}    0.9919
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9919
+{txt}       Total {c |} {res} 406523.039     3,182  127.757083   {txt}Root MSE        =   {res} 1.0187
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}      lncons{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 10}x1 {c |}{col 14}{res}{space 2}-.0042392{col 26}{space 2} .0044449{col 37}{space 1}   -0.95{col 46}{space 3}0.340{col 54}{space 4}-.0129544{col 67}{space 3}  .004476
+{txt}{space 10}x2 {c |}{col 14}{res}{space 2} .0018193{col 26}{space 2} .0060543{col 37}{space 1}    0.30{col 46}{space 3}0.764{col 54}{space 4}-.0100514{col 67}{space 3}   .01369
+{txt}{space 10}x3 {c |}{col 14}{res}{space 2}-.0016467{col 26}{space 2} .0053588{col 37}{space 1}   -0.31{col 46}{space 3}0.759{col 54}{space 4}-.0121537{col 67}{space 3} .0088604
+{txt}{space 10}x4 {c |}{col 14}{res}{space 2} .0001008{col 26}{space 2} .0003513{col 37}{space 1}    0.29{col 46}{space 3}0.774{col 54}{space 4}-.0005881{col 67}{space 3} .0007897
+{txt}{space 10}x5 {c |}{col 14}{res}{space 2} .0797361{col 26}{space 2} .0881447{col 37}{space 1}    0.90{col 46}{space 3}0.366{col 54}{space 4}-.0930905{col 67}{space 3} .2525628
+{txt}{space 10}x6 {c |}{col 14}{res}{space 2} 1.977119{col 26}{space 2} .0399461{col 37}{space 1}   49.49{col 46}{space 3}0.000{col 54}{space 4} 1.898796{col 67}{space 3} 2.055442
+{txt}{space 10}x7 {c |}{col 14}{res}{space 2} .7852425{col 26}{space 2} .0646219{col 37}{space 1}   12.15{col 46}{space 3}0.000{col 54}{space 4} .6585375{col 67}{space 3} .9119475
+{txt}{space 10}x9 {c |}{col 14}{res}{space 2} -.503308{col 26}{space 2} .0366557{col 37}{space 1}  -13.73{col 46}{space 3}0.000{col 54}{space 4}-.5751793{col 67}{space 3}-.4314367
+{txt}{space 9}x10 {c |}{col 14}{res}{space 2} .7757489{col 26}{space 2} .0396597{col 37}{space 1}   19.56{col 46}{space 3}0.000{col 54}{space 4} .6979876{col 67}{space 3} .8535103
+{txt}{space 9}x11 {c |}{col 14}{res}{space 2}  1.99579{col 26}{space 2} .0044303{col 37}{space 1}  450.49{col 46}{space 3}0.000{col 54}{space 4} 1.987103{col 67}{space 3} 2.004476
+{txt}{space 9}x12 {c |}{col 14}{res}{space 2} 1.481482{col 26}{space 2} .0084413{col 37}{space 1}  175.51{col 46}{space 3}0.000{col 54}{space 4} 1.464931{col 67}{space 3} 1.498033
+{txt}{space 9}x14 {c |}{col 14}{res}{space 2}  2.33091{col 26}{space 2} .0466561{col 37}{space 1}   49.96{col 46}{space 3}0.000{col 54}{space 4} 2.239431{col 67}{space 3}  2.42239
+{txt}{space 9}x15 {c |}{col 14}{res}{space 2} 3.785601{col 26}{space 2}   .04637{col 37}{space 1}   81.64{col 46}{space 3}0.000{col 54}{space 4} 3.694682{col 67}{space 3} 3.876519
+{txt}{space 9}x16 {c |}{col 14}{res}{space 2} .8315117{col 26}{space 2} .0666994{col 37}{space 1}   12.47{col 46}{space 3}0.000{col 54}{space 4} .7007333{col 67}{space 3} .9622901
+{txt}{space 9}x17 {c |}{col 14}{res}{space 2}-3.434647{col 26}{space 2} 1.915606{col 37}{space 1}   -1.79{col 46}{space 3}0.073{col 54}{space 4}-7.190602{col 67}{space 3} .3213083
+{txt}{space 9}x18 {c |}{col 14}{res}{space 2} .1394218{col 26}{space 2} .1823191{col 37}{space 1}    0.76{col 46}{space 3}0.444{col 54}{space 4}-.2180538{col 67}{space 3} .4968975
+{txt}{space 9}x19 {c |}{col 14}{res}{space 2} .0027917{col 26}{space 2} .0060361{col 37}{space 1}    0.46{col 46}{space 3}0.644{col 54}{space 4}-.0090433{col 67}{space 3} .0146267
+{txt}{space 9}x20 {c |}{col 14}{res}{space 2}-.0048604{col 26}{space 2} .0092412{col 37}{space 1}   -0.53{col 46}{space 3}0.599{col 54}{space 4}-.0229798{col 67}{space 3}  .013259
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 16.05065{col 26}{space 2} 1.906577{col 37}{space 1}    8.42{col 46}{space 3}0.000{col 54}{space 4}  12.3124{col 67}{space 3} 19.78891
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. estat ic
+
+Akaike's information criterion and Bayesian information criterion
+
+{txt}{hline 13}{c TT}{hline 63}
+       Model {c |}        Obs  ll(null)  ll(model)      df         AIC        BIC
+{hline 13}{c +}{hline 63}
+{ralign 12:.}{col 14}{c |}{res}{col 16}     3,183{col 27}-12234.96{col 38}-4565.966{col 49}    19{col 58} 9169.933{col 69} 9285.179
+{txt}{hline 13}{c BT}{hline 63}
+{p 15 21 2}
+Note: N=Obs used in calculating BIC; see {helpb bic_note:[R] BIC note}.
+{p_end}
+
+{com}. 
+. *** 2.4.3.3 Regression Dianostics
+. *** Check multicollinearity
+. vif
+
+{txt}    Variable {c |}       VIF       1/VIF  
+{hline 13}{c +}{hline 22}
+{space 9}x12 {c |} {res}     4.68    0.213459
+{txt}{space 9}x17 {c |} {res}     4.67    0.214209
+{txt}{space 9}x15 {c |} {res}     1.39    0.721585
+{txt}{space 9}x14 {c |} {res}     1.38    0.724691
+{txt}{space 9}x16 {c |} {res}     1.19    0.838511
+{txt}{space 10}x7 {c |} {res}     1.12    0.891854
+{txt}{space 9}x11 {c |} {res}     1.12    0.895676
+{txt}{space 10}x3 {c |} {res}     1.02    0.978292
+{txt}{space 10}x6 {c |} {res}     1.02    0.980011
+{txt}{space 10}x4 {c |} {res}     1.01    0.985853
+{txt}{space 9}x18 {c |} {res}     1.01    0.988899
+{txt}{space 10}x1 {c |} {res}     1.01    0.992233
+{txt}{space 9}x10 {c |} {res}     1.01    0.992396
+{txt}{space 10}x2 {c |} {res}     1.01    0.992543
+{txt}{space 10}x5 {c |} {res}     1.01    0.993285
+{txt}{space 10}x9 {c |} {res}     1.01    0.994666
+{txt}{space 9}x19 {c |} {res}     1.00    0.995648
+{txt}{space 9}x20 {c |} {res}     1.00    0.995922
+{txt}{hline 13}{c +}{hline 22}
+    Mean VIF {c |} {res}     1.48
+{txt}
+{com}. 
+. *** Check Model Specification
+. linktest
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}     3,183
+{txt}{hline 13}{c +}{hline 34}   F(2, 3180)      > {res} 99999.00
+{txt}       Model {c |} {res} 403240.138         2  201620.069   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3282.90087     3,180  1.03235876   {txt}R-squared       ={res}    0.9919
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9919
+{txt}       Total {c |} {res} 406523.039     3,182  127.757083   {txt}Root MSE        =   {res} 1.0161
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}      lncons{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}_hat {c |}{col 14}{res}{space 2} 1.009452{col 26}{space 2} .0122607{col 37}{space 1}   82.33{col 46}{space 3}0.000{col 54}{space 4} .9854122{col 67}{space 3} 1.033491
+{txt}{space 6}_hatsq {c |}{col 14}{res}{space 2}-.0000929{col 26}{space 2} .0001194{col 37}{space 1}   -0.78{col 46}{space 3}0.437{col 54}{space 4} -.000327{col 67}{space 3} .0001413
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-.2287713{col 26}{space 2} .3059099{col 37}{space 1}   -0.75{col 46}{space 3}0.455{col 54}{space 4} -.828572{col 67}{space 3} .3710294
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. ovtest
+
+{txt}Ramsey RESET test using powers of the fitted values of lncons
+       Ho:  model has no omitted variables
+                F(3, 3161) = {res}     1.97
+                  {txt}Prob > F =      {res}0.1160
+{txt}
+{com}. 
+. *** check heteroskedasticity
+. estat hettest
+
+{txt}Breusch-Pagan / Cook-Weisberg test for heteroskedasticity 
+         Ho: Constant variance
+{p 9 20}Variables: fitted values of lncons
+
+{col 10}chi2({res}1{txt}){col 23}={res}     1.70
+{txt}{col 10}Prob > chi2{col 23}={res}   0.1926
+{txt}
+{com}. 
+. *** Checking Normality of Residuals
+. predict r, resid
+{txt}(1,383 missing values generated)
+
+{com}. kdensity r, normal name(kdensity2)
+{res}{txt}
+{com}. pnorm r, name(pnorm2)
+{res}{txt}
+{com}. qnorm r, name(qnorm2)
+{res}{txt}
+{com}. swilk r
+
+                   {txt}Shapiro-Wilk W test for normal data
+
+    Variable {c |}        Obs{col 33}W{col 45}V{col 55}z       Prob>z
+{hline 13}{c +}{hline 54}
+           r {c |} {res}     3,183    0.99883      2.120     1.942    0.02605
+{txt}
+{com}. 
+. *** Note: Similar non normality conclsion
+. 
+. **********************************************************************************
+. 
+. ** 2.4.4 alternative prediction model (trail 2)
+. 
+. use "https://raw.githubusercontent.com/satertt/WBG-Poverty-and-Equity-Global-Practice/master/predictLcons.dta", clear
+{txt}
+{com}. 
+. *** 2.4.4.1 Model without x8, x13 and x16 (Model 4) ***
+. 
+. drop x8 x13 x16 x21
+{txt}
+{com}. reg lncons x*
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}     3,183
+{txt}{hline 13}{c +}{hline 34}   F(17, 3165)     = {res} 21784.56
+{txt}       Model {c |} {res} 403078.228        17   23710.484   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3444.81122     3,165  1.08840797   {txt}R-squared       ={res}    0.9915
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9915
+{txt}       Total {c |} {res} 406523.039     3,182  127.757083   {txt}Root MSE        =   {res} 1.0433
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}      lncons{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 10}x1 {c |}{col 14}{res}{space 2}-.0071394{col 26}{space 2} .0045458{col 37}{space 1}   -1.57{col 46}{space 3}0.116{col 54}{space 4}-.0160524{col 67}{space 3} .0017736
+{txt}{space 10}x2 {c |}{col 14}{res}{space 2} .0041258{col 26}{space 2} .0061973{col 37}{space 1}    0.67{col 46}{space 3}0.506{col 54}{space 4}-.0080254{col 67}{space 3} .0162769
+{txt}{space 10}x3 {c |}{col 14}{res}{space 2}-.0032573{col 26}{space 2} .0054864{col 37}{space 1}   -0.59{col 46}{space 3}0.553{col 54}{space 4}-.0140145{col 67}{space 3} .0074999
+{txt}{space 10}x4 {c |}{col 14}{res}{space 2} .0002093{col 26}{space 2} .0003597{col 37}{space 1}    0.58{col 46}{space 3}0.561{col 54}{space 4} -.000496{col 67}{space 3} .0009146
+{txt}{space 10}x5 {c |}{col 14}{res}{space 2} .0720001{col 26}{space 2} .0902671{col 37}{space 1}    0.80{col 46}{space 3}0.425{col 54}{space 4}-.1049879{col 67}{space 3}  .248988
+{txt}{space 10}x6 {c |}{col 14}{res}{space 2}  1.97109{col 26}{space 2}  .040906{col 37}{space 1}   48.19{col 46}{space 3}0.000{col 54}{space 4} 1.890885{col 67}{space 3} 2.051294
+{txt}{space 10}x7 {c |}{col 14}{res}{space 2}   .79068{col 26}{space 2}  .066178{col 37}{space 1}   11.95{col 46}{space 3}0.000{col 54}{space 4} .6609239{col 67}{space 3} .9204361
+{txt}{space 10}x9 {c |}{col 14}{res}{space 2}-.5029069{col 26}{space 2} .0375392{col 37}{space 1}  -13.40{col 46}{space 3}0.000{col 54}{space 4}-.5765105{col 67}{space 3}-.4293033
+{txt}{space 9}x10 {c |}{col 14}{res}{space 2} .7820805{col 26}{space 2} .0406123{col 37}{space 1}   19.26{col 46}{space 3}0.000{col 54}{space 4} .7024514{col 67}{space 3} .8617096
+{txt}{space 9}x11 {c |}{col 14}{res}{space 2} 1.996516{col 26}{space 2} .0045367{col 37}{space 1}  440.09{col 46}{space 3}0.000{col 54}{space 4} 1.987621{col 67}{space 3} 2.005411
+{txt}{space 9}x12 {c |}{col 14}{res}{space 2} 1.481085{col 26}{space 2} .0086447{col 37}{space 1}  171.33{col 46}{space 3}0.000{col 54}{space 4} 1.464135{col 67}{space 3} 1.498034
+{txt}{space 9}x14 {c |}{col 14}{res}{space 2} 2.133489{col 26}{space 2} .0449442{col 37}{space 1}   47.47{col 46}{space 3}0.000{col 54}{space 4} 2.045366{col 67}{space 3} 2.221611
+{txt}{space 9}x15 {c |}{col 14}{res}{space 2} 3.588111{col 26}{space 2} .0446305{col 37}{space 1}   80.40{col 46}{space 3}0.000{col 54}{space 4} 3.500603{col 67}{space 3} 3.675618
+{txt}{space 9}x17 {c |}{col 14}{res}{space 2}-3.442391{col 26}{space 2} 1.961779{col 37}{space 1}   -1.75{col 46}{space 3}0.079{col 54}{space 4}-7.288878{col 67}{space 3} .4040963
+{txt}{space 9}x18 {c |}{col 14}{res}{space 2} .1106025{col 26}{space 2} .1866987{col 37}{space 1}    0.59{col 46}{space 3}0.554{col 54}{space 4}-.2554602{col 67}{space 3} .4766651
+{txt}{space 9}x19 {c |}{col 14}{res}{space 2} .0010325{col 26}{space 2} .0061799{col 37}{space 1}    0.17{col 46}{space 3}0.867{col 54}{space 4}-.0110844{col 67}{space 3} .0131495
+{txt}{space 9}x20 {c |}{col 14}{res}{space 2}-.0017897{col 26}{space 2} .0094606{col 37}{space 1}   -0.19{col 46}{space 3}0.850{col 54}{space 4}-.0203392{col 67}{space 3} .0167598
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 16.27065{col 26}{space 2} 1.952449{col 37}{space 1}    8.33{col 46}{space 3}0.000{col 54}{space 4} 12.44246{col 67}{space 3} 20.09884
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. 
+. estat ic
+
+Akaike's information criterion and Bayesian information criterion
+
+{txt}{hline 13}{c TT}{hline 63}
+       Model {c |}        Obs  ll(null)  ll(model)      df         AIC        BIC
+{hline 13}{c +}{hline 63}
+{ralign 12:.}{col 14}{c |}{res}{col 16}     3,183{col 27}-12234.96{col 38}-4642.281{col 49}    18{col 58} 9320.563{col 69} 9429.743
+{txt}{hline 13}{c BT}{hline 63}
+{p 15 21 2}
+Note: N=Obs used in calculating BIC; see {helpb bic_note:[R] BIC note}.
+{p_end}
+
+{com}. 
+. *** 2.4.4.2 Regression Dianostics ***
+. 
+. *** Check multicollinearity
+. vif
+
+{txt}    Variable {c |}       VIF       1/VIF  
+{hline 13}{c +}{hline 22}
+{space 9}x12 {c |} {res}     4.68    0.213462
+{txt}{space 9}x17 {c |} {res}     4.67    0.214209
+{txt}{space 9}x15 {c |} {res}     1.22    0.816932
+{txt}{space 9}x14 {c |} {res}     1.22    0.819052
+{txt}{space 10}x7 {c |} {res}     1.12    0.891895
+{txt}{space 9}x11 {c |} {res}     1.12    0.895831
+{txt}{space 10}x3 {c |} {res}     1.02    0.978861
+{txt}{space 10}x6 {c |} {res}     1.02    0.980155
+{txt}{space 10}x4 {c |} {res}     1.01    0.986459
+{txt}{space 9}x18 {c |} {res}     1.01    0.989058
+{txt}{space 9}x10 {c |} {res}     1.01    0.992558
+{txt}{space 10}x5 {c |} {res}     1.01    0.993334
+{txt}{space 10}x2 {c |} {res}     1.01    0.993470
+{txt}{space 10}x9 {c |} {res}     1.01    0.994667
+{txt}{space 10}x1 {c |} {res}     1.01    0.994958
+{txt}{space 9}x19 {c |} {res}     1.00    0.996193
+{txt}{space 9}x20 {c |} {res}     1.00    0.996630
+{txt}{hline 13}{c +}{hline 22}
+    Mean VIF {c |} {res}     1.48
+{txt}
+{com}. 
+. *** Check Model Specification
+. linktest
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}     3,183
+{txt}{hline 13}{c +}{hline 34}   F(2, 3180)      > {res} 99999.00
+{txt}       Model {c |} {res} 403079.009         2  201539.505   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 3444.02951     3,180  1.08302815   {txt}R-squared       ={res}    0.9915
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.9915
+{txt}       Total {c |} {res} 406523.039     3,182  127.757083   {txt}Root MSE        =   {res} 1.0407
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}      lncons{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}_hat {c |}{col 14}{res}{space 2} 1.010596{col 26}{space 2}  .012578{col 37}{space 1}   80.35{col 46}{space 3}0.000{col 54}{space 4} .9859343{col 67}{space 3} 1.035258
+{txt}{space 6}_hatsq {c |}{col 14}{res}{space 2}-.0001041{col 26}{space 2} .0001225{col 37}{space 1}   -0.85{col 46}{space 3}0.396{col 54}{space 4}-.0003443{col 67}{space 3} .0001361
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-.2564876{col 26}{space 2} .3138255{col 37}{space 1}   -0.82{col 46}{space 3}0.414{col 54}{space 4}-.8718084{col 67}{space 3} .3588333
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}
+{com}. ovtest
+
+{txt}Ramsey RESET test using powers of the fitted values of lncons
+       Ho:  model has no omitted variables
+                F(3, 3162) = {res}     1.69
+                  {txt}Prob > F =      {res}0.1666
+{txt}
+{com}. 
+. *** check  heteroskedasticity
+. estat hettest
+
+{txt}Breusch-Pagan / Cook-Weisberg test for heteroskedasticity 
+         Ho: Constant variance
+{p 9 20}Variables: fitted values of lncons
+
+{col 10}chi2({res}1{txt}){col 23}={res}     1.62
+{txt}{col 10}Prob > chi2{col 23}={res}   0.2036
+{txt}
+{com}. 
+. ** One of the main assumptions for the ordinary least squares regression is the homogeneity of variance of the residuals.
+. 
+. *** Checking Normality of Residuals
+. predict r, resid
+{txt}(1,383 missing values generated)
+
+{com}. kdensity r, normal name(kdensity3)
+{res}{txt}
+{com}. pnorm r, name(pnorm3)
+{res}{txt}
+{com}. qnorm r, name(qnorm3)
+{res}{txt}
+{com}. swilk r
+
+                   {txt}Shapiro-Wilk W test for normal data
+
+    Variable {c |}        Obs{col 33}W{col 45}V{col 55}z       Prob>z
+{hline 13}{c +}{hline 54}
+           r {c |} {res}     3,183    0.99901      1.788     1.502    0.06655
+{txt}
+{com}. 
+. *** Note: 1. the residual is normally distributed
+. ***       2. Although Model 4 does not have lowest AIC and BIC, but with a normally distributed
+. ***          error terms. It is the most preferred model here. 
+. 
+. ********************************************************************
+. 
+. ************************************
+. * 2.5 Perform above test with mata *
+. ************************************
+. 
+. use "https://raw.githubusercontent.com/satertt/WBG-Poverty-and-Equity-Global-Practice/master/predictLcons.dta", clear
+{txt}
+{com}. 
+. 
+. ** 2.5.1 Model 4 **
+. 
+. drop x8 x13 x16 x21
+{txt}
+{com}. gen select=1 if lncons==.
+{txt}(3,183 missing values generated)
+
+{com}. replace select=0 if select==.
+{txt}(3,183 real changes made)
+
+{com}. mata
+{txt}{hline 49} mata (type {cmd:end} to exit) {hline}
+{com}: st_view(Data=., ., "lncons x*",0)
+{res}
+{com}: st_view(Data_test=., ., "lncons x*","select")
+{res}
+{com}: st_subview(y=.,Data,.,1)
+{res}
+{com}: st_subview(X=.,Data,.,(2\.))
+{res}
+{com}: st_subview(X_test=.,Data_test,.,(2\.))
+{res}
+{com}: XX = cross(X,1 , X,1)
+{res}
+{com}: Xy = cross(X,1 , y,0)
+{res}
+{com}: b = invsym(XX)*Xy
+{res}
+{com}: 
+: X = X, J(rows(X), 1, 1)
+{res}
+{com}: X_test = X_test, J(rows(X_test), 1, 1)
+{res}
+{com}: e = y - X*b
+{res}
+{com}: n = rows(X)
+{res}
+{com}: k = cols(X)
+{res}
+{com}: s2= (e'e)/(n-k)
+{res}
+{com}: V = s2*invsym(XX)
+{res}
+{com}: se = sqrt(diagonal(V))
+{res}
+{com}: (b, se, b:/se, 2*ttail(n-k, abs(b:/se)))
+{res}        {txt}           1              2              3              4
+     {c TLC}{hline 61}{c TRC}
+   1 {c |}  {res}-.0071393816    .0045458025    -1.57054372    .1163886306{txt}  {c |}
+   2 {c |}  {res} .0041257539    .0061973136    .6657326449    .5056305177{txt}  {c |}
+   3 {c |}  {res}-.0032572723    .0054863615   -.5937035588    .5527528296{txt}  {c |}
+   4 {c |}  {res} .0002092917    .0003597043    .5818436417    .5607134439{txt}  {c |}
+   5 {c |}  {res} .0720000613    .0902671085    .7976334075    .4251430953{txt}  {c |}
+   6 {c |}  {res} 1.971089552    .0409059925    48.18583863              0{txt}  {c |}
+   7 {c |}  {res} .7906800035    .0661779777    11.94778129    3.25280e-32{txt}  {c |}
+   8 {c |}  {res}-.5029069335    .0375391893    -13.3968512    7.52979e-40{txt}  {c |}
+   9 {c |}  {res}  .782080455    .0406123008    19.25723094    3.10371e-78{txt}  {c |}
+  10 {c |}  {res} 1.996515708    .0045366518    440.0857308              0{txt}  {c |}
+  11 {c |}  {res} 1.481084546    .0086446553    171.3295086              0{txt}  {c |}
+  12 {c |}  {res}  2.13348851    .0449441934    47.46972515              0{txt}  {c |}
+  13 {c |}  {res} 3.588110746    .0446305417    80.39585919              0{txt}  {c |}
+  14 {c |}  {res}-3.442390807    1.961778972    -1.75472918    .0794023964{txt}  {c |}
+  15 {c |}  {res} .1106024631    .1866986559    .5924116731    .5536172708{txt}  {c |}
+  16 {c |}  {res} .0010325285    .0061798701    .1670793223    .8673183092{txt}  {c |}
+  17 {c |}  {res}-.0017896938    .0094606042   -.1891733097    .8499691154{txt}  {c |}
+  18 {c |}  {res} 16.27065109    1.952448697    8.333458964    1.15530e-16{txt}  {c |}
+     {c BLC}{hline 61}{c BRC}
+
+{com}: 
+: // prediction
+: 
+: pred1 = X_test*b
+{res}
+{com}: pred1
+{res}           {txt}          1
+        {c TLC}{hline 15}{c TRC}
+      1 {c |}  {res}67.95654214{txt}  {c |}
+      2 {c |}  {res}58.39705343{txt}  {c |}
+      3 {c |}  {res} 66.8698442{txt}  {c |}
+      4 {c |}  {res}57.19730272{txt}  {c |}
+      5 {c |}  {res}49.24617283{txt}  {c |}
+      6 {c |}  {res}45.38209233{txt}  {c |}
+      7 {c |}  {res}66.08956238{txt}  {c |}
+      8 {c |}  {res} 48.1827927{txt}  {c |}
+      9 {c |}  {res}60.37020069{txt}  {c |}
+     10 {c |}  {res}58.17543851{txt}  {c |}
+     11 {c |}  {res}63.15039248{txt}  {c |}
+     12 {c |}  {res}60.62077298{txt}  {c |}
+     13 {c |}  {res}50.89558185{txt}  {c |}
+     14 {c |}  {res}51.38697505{txt}  {c |}
+     15 {c |}  {res}56.42410095{txt}  {c |}
+     16 {c |}  {res}68.37580259{txt}  {c |}
+     17 {c |}  {res} 77.1637583{txt}  {c |}
+     18 {c |}  {res}51.20019706{txt}  {c |}
+     19 {c |}  {res}47.90586694{txt}  {c |}
+     20 {c |}  {res}52.36045636{txt}  {c |}
+     21 {c |}  {res}51.64143233{txt}  {c |}
+     22 {c |}  {res}41.32934505{txt}  {c |}
+     23 {c |}  {res}42.44962932{txt}  {c |}
+     24 {c |}  {res}54.55327922{txt}  {c |}
+     25 {c |}  {res} 46.0807686{txt}  {c |}
+     26 {c |}  {res}62.32273844{txt}  {c |}
+     27 {c |}  {res}58.23894263{txt}  {c |}
+     28 {c |}  {res}35.20476265{txt}  {c |}
+     29 {c |}  {res}58.08200063{txt}  {c |}
+     30 {c |}  {res}35.77731245{txt}  {c |}
+     31 {c |}  {res}43.00270593{txt}  {c |}
+     32 {c |}  {res}46.08208493{txt}  {c |}
+     33 {c |}  {res}55.13636516{txt}  {c |}
+     34 {c |}  {res}42.39936762{txt}  {c |}
+     35 {c |}  {res}55.24334246{txt}  {c |}
+     36 {c |}  {res}57.99818326{txt}  {c |}
+     37 {c |}  {res}65.66763203{txt}  {c |}
+     38 {c |}  {res}44.68015242{txt}  {c |}
+     39 {c |}  {res}47.86137632{txt}  {c |}
+     40 {c |}  {res}39.16002092{txt}  {c |}
+     41 {c |}  {res}55.71791295{txt}  {c |}
+     42 {c |}  {res}46.66333806{txt}  {c |}
+     43 {c |}  {res}66.16779084{txt}  {c |}
+     44 {c |}  {res}62.73830502{txt}  {c |}
+     45 {c |}  {res}45.93226163{txt}  {c |}
+     46 {c |}  {res}58.34440228{txt}  {c |}
+     47 {c |}  {res}53.38697059{txt}  {c |}
+     48 {c |}  {res} 42.1699084{txt}  {c |}
+     49 {c |}  {res}58.07911504{txt}  {c |}
+     50 {c |}  {res}60.76142832{txt}  {c |}
+     51 {c |}  {res} 61.2033204{txt}  {c |}
+     52 {c |}  {res}57.81203667{txt}  {c |}
+     53 {c |}  {res}48.04698654{txt}  {c |}
+     54 {c |}  {res}46.76590157{txt}  {c |}
+     55 {c |}  {res}42.68144308{txt}  {c |}
+     56 {c |}  {res}28.80201662{txt}  {c |}
+     57 {c |}  {res}35.35257024{txt}  {c |}
+     58 {c |}  {res}73.71866326{txt}  {c |}
+     59 {c |}  {res}39.26089796{txt}  {c |}
+     60 {c |}  {res}44.00265429{txt}  {c |}
+     61 {c |}  {res}70.24073524{txt}  {c |}
+     62 {c |}  {res} 58.9281883{txt}  {c |}
+     63 {c |}  {res}57.54150762{txt}  {c |}
+     64 {c |}  {res}32.26614798{txt}  {c |}
+     65 {c |}  {res}56.14654029{txt}  {c |}
+     66 {c |}  {res}45.13491288{txt}  {c |}
+     67 {c |}  {res}53.96332548{txt}  {c |}
+     68 {c |}  {res}37.73723599{txt}  {c |}
+     69 {c |}  {res}67.85279573{txt}  {c |}
+     70 {c |}  {res}41.32596089{txt}  {c |}
+     71 {c |}  {res}31.66958124{txt}  {c |}
+     72 {c |}  {res}66.32473127{txt}  {c |}
+     73 {c |}  {res}48.60800867{txt}  {c |}
+     74 {c |}  {res}62.81473071{txt}  {c |}
+     75 {c |}  {res}56.26699554{txt}  {c |}
+     76 {c |}  {res}49.73527682{txt}  {c |}
+     77 {c |}  {res}40.35127409{txt}  {c |}
+     78 {c |}  {res}75.87494785{txt}  {c |}
+     79 {c |}  {res}62.32943114{txt}  {c |}
+     80 {c |}  {res}59.55446621{txt}  {c |}
+     81 {c |}  {res}38.31440556{txt}  {c |}
+     82 {c |}  {res}40.06627424{txt}  {c |}
+     83 {c |}  {res}51.37875691{txt}  {c |}
+     84 {c |}  {res}58.90629291{txt}  {c |}
+     85 {c |}  {res}48.29414793{txt}  {c |}
+     86 {c |}  {res}35.68805469{txt}  {c |}
+     87 {c |}  {res}27.42979374{txt}  {c |}
+     88 {c |}  {res}45.72342008{txt}  {c |}
+     89 {c |}  {res}61.07380715{txt}  {c |}
+     90 {c |}  {res}40.53267764{txt}  {c |}
+     91 {c |}  {res}41.37060213{txt}  {c |}
+     92 {c |}  {res}52.01300692{txt}  {c |}
+     93 {c |}  {res}56.33895894{txt}  {c |}
+     94 {c |}  {res}46.56042789{txt}  {c |}
+     95 {c |}  {res}65.76567505{txt}  {c |}
+     96 {c |}  {res} 50.8555849{txt}  {c |}
+     97 {c |}  {res}39.44113407{txt}  {c |}
+     98 {c |}  {res}62.80612553{txt}  {c |}
+     99 {c |}  {res}49.68177654{txt}  {c |}
+    100 {c |}  {res}47.27747259{txt}  {c |}
+    101 {c |}  {res}43.21144049{txt}  {c |}
+    102 {c |}  {res}38.28595648{txt}  {c |}
+    103 {c |}  {res} 55.3492464{txt}  {c |}
+    104 {c |}  {res}38.39196323{txt}  {c |}
+    105 {c |}  {res}36.99204822{txt}  {c |}
+    106 {c |}  {res}49.16325406{txt}  {c |}
+    107 {c |}  {res}44.34769615{txt}  {c |}
+    108 {c |}  {res} 66.9368008{txt}  {c |}
+    109 {c |}  {res}59.80637926{txt}  {c |}
+    110 {c |}  {res}55.24107372{txt}  {c |}
+    111 {c |}  {res}37.04999406{txt}  {c |}
+    112 {c |}  {res}60.77311419{txt}  {c |}
+    113 {c |}  {res}36.25933499{txt}  {c |}
+    114 {c |}  {res}41.88631307{txt}  {c |}
+    115 {c |}  {res}38.11136286{txt}  {c |}
+    116 {c |}  {res}57.37475803{txt}  {c |}
+    117 {c |}  {res}49.67873796{txt}  {c |}
+    118 {c |}  {res}43.24136141{txt}  {c |}
+    119 {c |}  {res}38.64945716{txt}  {c |}
+    120 {c |}  {res}38.74562942{txt}  {c |}
+    121 {c |}  {res}59.34722825{txt}  {c |}
+    122 {c |}  {res}47.39472779{txt}  {c |}
+    123 {c |}  {res}42.62791818{txt}  {c |}
+    124 {c |}  {res}74.19427244{txt}  {c |}
+    125 {c |}  {res}61.99454283{txt}  {c |}
+    126 {c |}  {res}39.49984073{txt}  {c |}
+    127 {c |}  {res}61.26393956{txt}  {c |}
+    128 {c |}  {res}53.72784658{txt}  {c |}
+    129 {c |}  {res}41.02295897{txt}  {c |}
+    130 {c |}  {res}66.82886258{txt}  {c |}
+    131 {c |}  {res}45.28721341{txt}  {c |}
+    132 {c |}  {res}55.68302861{txt}  {c |}
+    133 {c |}  {res}55.91967562{txt}  {c |}
+    134 {c |}  {res}55.80619243{txt}  {c |}
+    135 {c |}  {res}52.40865796{txt}  {c |}
+    136 {c |}  {res}67.64088238{txt}  {c |}
+    137 {c |}  {res}39.60944989{txt}  {c |}
+    138 {c |}  {res}41.69833293{txt}  {c |}
+    139 {c |}  {res} 57.3393191{txt}  {c |}
+    140 {c |}  {res}47.72195453{txt}  {c |}
+    141 {c |}  {res}42.68211305{txt}  {c |}
+    142 {c |}  {res}55.47725349{txt}  {c |}
+    143 {c |}  {res}55.24194238{txt}  {c |}
+    144 {c |}  {res}51.05141202{txt}  {c |}
+    145 {c |}  {res}55.87004304{txt}  {c |}
+    146 {c |}  {res}57.67125112{txt}  {c |}
+    147 {c |}  {res}52.78944214{txt}  {c |}
+    148 {c |}  {res}50.29868473{txt}  {c |}
+    149 {c |}  {res}58.05132721{txt}  {c |}
+    150 {c |}  {res}63.61114457{txt}  {c |}
+    151 {c |}  {res}56.94277709{txt}  {c |}
+    152 {c |}  {res}47.11590174{txt}  {c |}
+    153 {c |}  {res}60.59966419{txt}  {c |}
+    154 {c |}  {res}66.55028679{txt}  {c |}
+    155 {c |}  {res}42.71303293{txt}  {c |}
+    156 {c |}  {res}60.85429281{txt}  {c |}
+    157 {c |}  {res}55.38040857{txt}  {c |}
+    158 {c |}  {res}63.87460216{txt}  {c |}
+    159 {c |}  {res}73.59900301{txt}  {c |}
+    160 {c |}  {res}60.45939176{txt}  {c |}
+    161 {c |}  {res} 35.2837504{txt}  {c |}
+    162 {c |}  {res}53.17805459{txt}  {c |}
+    163 {c |}  {res}28.84156075{txt}  {c |}
+    164 {c |}  {res}49.25303638{txt}  {c |}
+    165 {c |}  {res}38.48296193{txt}  {c |}
+    166 {c |}  {res} 45.1982489{txt}  {c |}
+    167 {c |}  {res}44.89533143{txt}  {c |}
+    168 {c |}  {res}42.97741455{txt}  {c |}
+    169 {c |}  {res}52.33382046{txt}  {c |}
+    170 {c |}  {res}47.97620218{txt}  {c |}
+    171 {c |}  {res}65.33271993{txt}  {c |}
+    172 {c |}  {res}29.25891561{txt}  {c |}
+    173 {c |}  {res}55.90561093{txt}  {c |}
+    174 {c |}  {res}42.39802745{txt}  {c |}
+    175 {c |}  {res}56.13316343{txt}  {c |}
+    176 {c |}  {res}56.28616879{txt}  {c |}
+    177 {c |}  {res}59.57235092{txt}  {c |}
+    178 {c |}  {res}34.79899591{txt}  {c |}
+    179 {c |}  {res}49.37971256{txt}  {c |}
+    180 {c |}  {res}66.58052657{txt}  {c |}
+    181 {c |}  {res}64.22073951{txt}  {c |}
+    182 {c |}  {res}62.15198801{txt}  {c |}
+    183 {c |}  {res}49.63105895{txt}  {c |}
+    184 {c |}  {res}26.60905317{txt}  {c |}
+    185 {c |}  {res}59.31314779{txt}  {c |}
+    186 {c |}  {res}69.87248594{txt}  {c |}
+    187 {c |}  {res}70.75856852{txt}  {c |}
+    188 {c |}  {res}43.54118252{txt}  {c |}
+    189 {c |}  {res}54.96149336{txt}  {c |}
+    190 {c |}  {res}35.81203861{txt}  {c |}
+    191 {c |}  {res}42.96412539{txt}  {c |}
+    192 {c |}  {res}56.95698036{txt}  {c |}
+    193 {c |}  {res}74.08125474{txt}  {c |}
+    194 {c |}  {res}44.14718326{txt}  {c |}
+    195 {c |}  {res}36.55097756{txt}  {c |}
+    196 {c |}  {res}42.83323752{txt}  {c |}
+    197 {c |}  {res}42.71561818{txt}  {c |}
+    198 {c |}  {res}50.11188411{txt}  {c |}
+    199 {c |}  {res}40.62815378{txt}  {c |}
+    200 {c |}  {res}44.58669568{txt}  {c |}
+    201 {c |}  {res}52.69295656{txt}  {c |}
+    202 {c |}  {res}64.52091271{txt}  {c |}
+    203 {c |}  {res} 47.2297755{txt}  {c |}
+    204 {c |}  {res}53.28008948{txt}  {c |}
+    205 {c |}  {res}49.42738609{txt}  {c |}
+    206 {c |}  {res}58.42768446{txt}  {c |}
+    207 {c |}  {res}54.76777644{txt}  {c |}
+    208 {c |}  {res}33.23128552{txt}  {c |}
+    209 {c |}  {res}62.83476364{txt}  {c |}
+    210 {c |}  {res}62.91151692{txt}  {c |}
+    211 {c |}  {res}38.90495978{txt}  {c |}
+    212 {c |}  {res}63.96679841{txt}  {c |}
+    213 {c |}  {res} 63.4440042{txt}  {c |}
+    214 {c |}  {res}67.68286857{txt}  {c |}
+    215 {c |}  {res} 49.9732772{txt}  {c |}
+    216 {c |}  {res}44.04928218{txt}  {c |}
+    217 {c |}  {res}40.74528477{txt}  {c |}
+    218 {c |}  {res}45.80790907{txt}  {c |}
+    219 {c |}  {res}46.40627375{txt}  {c |}
+    220 {c |}  {res}58.04076133{txt}  {c |}
+    221 {c |}  {res}46.72149965{txt}  {c |}
+    222 {c |}  {res}58.31542842{txt}  {c |}
+    223 {c |}  {res}45.97634073{txt}  {c |}
+    224 {c |}  {res}51.65895381{txt}  {c |}
+    225 {c |}  {res}61.88146542{txt}  {c |}
+    226 {c |}  {res} 59.6050475{txt}  {c |}
+    227 {c |}  {res}47.38333453{txt}  {c |}
+    228 {c |}  {res}44.52970547{txt}  {c |}
+    229 {c |}  {res}69.16513405{txt}  {c |}
+    230 {c |}  {res}55.58195622{txt}  {c |}
+    231 {c |}  {res}57.74304468{txt}  {c |}
+    232 {c |}  {res}53.32879085{txt}  {c |}
+    233 {c |}  {res}47.46201152{txt}  {c |}
+    234 {c |}  {res}49.61986373{txt}  {c |}
+    235 {c |}  {res}32.51511518{txt}  {c |}
+    236 {c |}  {res}49.72120252{txt}  {c |}
+    237 {c |}  {res}55.18246164{txt}  {c |}
+    238 {c |}  {res}42.19646548{txt}  {c |}
+    239 {c |}  {res}25.10748124{txt}  {c |}
+    240 {c |}  {res}38.00687411{txt}  {c |}
+    241 {c |}  {res}49.86026406{txt}  {c |}
+    242 {c |}  {res}39.05942049{txt}  {c |}
+    243 {c |}  {res}40.74932955{txt}  {c |}
+    244 {c |}  {res}56.22964147{txt}  {c |}
+    245 {c |}  {res}48.50517525{txt}  {c |}
+    246 {c |}  {res}73.13340212{txt}  {c |}
+    247 {c |}  {res}32.43258223{txt}  {c |}
+    248 {c |}  {res}50.49030112{txt}  {c |}
+    249 {c |}  {res}51.09902342{txt}  {c |}
+    250 {c |}  {res}49.28480206{txt}  {c |}
+    251 {c |}  {res}50.03665307{txt}  {c |}
+    252 {c |}  {res}56.19842534{txt}  {c |}
+    253 {c |}  {res}47.99684135{txt}  {c |}
+    254 {c |}  {res}43.20969635{txt}  {c |}
+    255 {c |}  {res}26.27610224{txt}  {c |}
+    256 {c |}  {res}41.09428504{txt}  {c |}
+    257 {c |}  {res}46.09310213{txt}  {c |}
+    258 {c |}  {res}49.84629184{txt}  {c |}
+    259 {c |}  {res}61.44735731{txt}  {c |}
+    260 {c |}  {res}76.19692946{txt}  {c |}
+    261 {c |}  {res} 37.3264622{txt}  {c |}
+    262 {c |}  {res}46.05684321{txt}  {c |}
+    263 {c |}  {res}40.70283992{txt}  {c |}
+    264 {c |}  {res}52.65535656{txt}  {c |}
+    265 {c |}  {res}52.61840737{txt}  {c |}
+    266 {c |}  {res}49.17738592{txt}  {c |}
+    267 {c |}  {res}39.80804797{txt}  {c |}
+    268 {c |}  {res}57.79389672{txt}  {c |}
+    269 {c |}  {res}41.73567511{txt}  {c |}
+    270 {c |}  {res}30.27085347{txt}  {c |}
+    271 {c |}  {res}53.90395731{txt}  {c |}
+    272 {c |}  {res}47.85594056{txt}  {c |}
+    273 {c |}  {res}62.86767331{txt}  {c |}
+    274 {c |}  {res}52.65953041{txt}  {c |}
+    275 {c |}  {res}76.06663671{txt}  {c |}
+    276 {c |}  {res}70.27206655{txt}  {c |}
+    277 {c |}  {res}62.87815233{txt}  {c |}
+    278 {c |}  {res}65.62085535{txt}  {c |}
+    279 {c |}  {res}58.84466562{txt}  {c |}
+    280 {c |}  {res} 59.9679007{txt}  {c |}
+    281 {c |}  {res}31.16520988{txt}  {c |}
+    282 {c |}  {res}26.63825871{txt}  {c |}
+    283 {c |}  {res}53.56914108{txt}  {c |}
+    284 {c |}  {res}70.19945565{txt}  {c |}
+    285 {c |}  {res}50.72797448{txt}  {c |}
+    286 {c |}  {res} 41.5752066{txt}  {c |}
+    287 {c |}  {res}47.67796036{txt}  {c |}
+    288 {c |}  {res}43.85736261{txt}  {c |}
+    289 {c |}  {res}67.38691023{txt}  {c |}
+    290 {c |}  {res}65.51542441{txt}  {c |}
+    291 {c |}  {res}74.23339918{txt}  {c |}
+    292 {c |}  {res}37.10070747{txt}  {c |}
+    293 {c |}  {res}65.41563527{txt}  {c |}
+    294 {c |}  {res}51.59447916{txt}  {c |}
+    295 {c |}  {res}63.13879754{txt}  {c |}
+    296 {c |}  {res}66.04235107{txt}  {c |}
+    297 {c |}  {res}55.70114032{txt}  {c |}
+    298 {c |}  {res}71.36779151{txt}  {c |}
+    299 {c |}  {res}47.38552322{txt}  {c |}
+    300 {c |}  {res}47.80141998{txt}  {c |}
+    301 {c |}  {res} 52.9846191{txt}  {c |}
+    302 {c |}  {res}51.97591257{txt}  {c |}
+    303 {c |}  {res} 44.7536723{txt}  {c |}
+    304 {c |}  {res}32.85767791{txt}  {c |}
+    305 {c |}  {res}50.17269643{txt}  {c |}
+    306 {c |}  {res}42.21617132{txt}  {c |}
+    307 {c |}  {res}63.09910758{txt}  {c |}
+    308 {c |}  {res}74.44497923{txt}  {c |}
+    309 {c |}  {res} 31.0683187{txt}  {c |}
+    310 {c |}  {res}67.41379891{txt}  {c |}
+    311 {c |}  {res}68.73892283{txt}  {c |}
+    312 {c |}  {res}36.44492388{txt}  {c |}
+    313 {c |}  {res}62.58811011{txt}  {c |}
+    314 {c |}  {res}56.11690752{txt}  {c |}
+    315 {c |}  {res}60.09007422{txt}  {c |}
+    316 {c |}  {res}60.33350844{txt}  {c |}
+    317 {c |}  {res}54.83746388{txt}  {c |}
+    318 {c |}  {res}50.13909079{txt}  {c |}
+    319 {c |}  {res}44.09590217{txt}  {c |}
+    320 {c |}  {res}43.63628127{txt}  {c |}
+    321 {c |}  {res}32.74453929{txt}  {c |}
+    322 {c |}  {res}50.00056367{txt}  {c |}
+    323 {c |}  {res}63.35840034{txt}  {c |}
+    324 {c |}  {res}54.04994322{txt}  {c |}
+    325 {c |}  {res}59.44317112{txt}  {c |}
+    326 {c |}  {res}72.87006127{txt}  {c |}
+    327 {c |}  {res} 63.2905902{txt}  {c |}
+    328 {c |}  {res}42.45578173{txt}  {c |}
+    329 {c |}  {res}68.55764552{txt}  {c |}
+    330 {c |}  {res}56.29770507{txt}  {c |}
+    331 {c |}  {res} 60.0356692{txt}  {c |}
+    332 {c |}  {res}49.87317678{txt}  {c |}
+    333 {c |}  {res}67.55558315{txt}  {c |}
+    334 {c |}  {res} 26.5836051{txt}  {c |}
+    335 {c |}  {res}67.84154187{txt}  {c |}
+    336 {c |}  {res}38.07038651{txt}  {c |}
+    337 {c |}  {res}67.68517711{txt}  {c |}
+    338 {c |}  {res}68.12474694{txt}  {c |}
+    339 {c |}  {res}46.65571747{txt}  {c |}
+    340 {c |}  {res}62.10807338{txt}  {c |}
+    341 {c |}  {res}41.51668485{txt}  {c |}
+    342 {c |}  {res}44.09937018{txt}  {c |}
+    343 {c |}  {res}51.28634049{txt}  {c |}
+    344 {c |}  {res}45.16530526{txt}  {c |}
+    345 {c |}  {res}33.94948126{txt}  {c |}
+    346 {c |}  {res}58.78267552{txt}  {c |}
+    347 {c |}  {res}51.67405132{txt}  {c |}
+    348 {c |}  {res}54.00045684{txt}  {c |}
+    349 {c |}  {res}45.79353972{txt}  {c |}
+    350 {c |}  {res}54.12777024{txt}  {c |}
+    351 {c |}  {res}43.88717237{txt}  {c |}
+    352 {c |}  {res}39.50499654{txt}  {c |}
+    353 {c |}  {res}58.46233324{txt}  {c |}
+    354 {c |}  {res}36.72737363{txt}  {c |}
+    355 {c |}  {res}51.19495808{txt}  {c |}
+    356 {c |}  {res}37.65186693{txt}  {c |}
+    357 {c |}  {res}64.64796397{txt}  {c |}
+    358 {c |}  {res}53.10543955{txt}  {c |}
+    359 {c |}  {res}36.45648487{txt}  {c |}
+    360 {c |}  {res}54.53021995{txt}  {c |}
+    361 {c |}  {res}38.06634531{txt}  {c |}
+    362 {c |}  {res}69.02887889{txt}  {c |}
+    363 {c |}  {res}52.72179713{txt}  {c |}
+    364 {c |}  {res}54.39259351{txt}  {c |}
+    365 {c |}  {res}68.46990019{txt}  {c |}
+    366 {c |}  {res}57.76364962{txt}  {c |}
+    367 {c |}  {res}47.14594381{txt}  {c |}
+    368 {c |}  {res}42.26553625{txt}  {c |}
+    369 {c |}  {res}50.08012909{txt}  {c |}
+    370 {c |}  {res}48.92193194{txt}  {c |}
+    371 {c |}  {res}49.61390648{txt}  {c |}
+    372 {c |}  {res}47.91473761{txt}  {c |}
+    373 {c |}  {res}43.09701946{txt}  {c |}
+    374 {c |}  {res}49.71510306{txt}  {c |}
+    375 {c |}  {res}44.51287212{txt}  {c |}
+    376 {c |}  {res}55.49977722{txt}  {c |}
+    377 {c |}  {res}45.29068546{txt}  {c |}
+    378 {c |}  {res}56.73756416{txt}  {c |}
+    379 {c |}  {res}33.42976507{txt}  {c |}
+    380 {c |}  {res}33.26223618{txt}  {c |}
+    381 {c |}  {res}43.85318304{txt}  {c |}
+    382 {c |}  {res}63.46597117{txt}  {c |}
+    383 {c |}  {res}64.29126169{txt}  {c |}
+    384 {c |}  {res}46.62678593{txt}  {c |}
+    385 {c |}  {res}52.45452091{txt}  {c |}
+    386 {c |}  {res}61.66833963{txt}  {c |}
+    387 {c |}  {res}59.07756775{txt}  {c |}
+    388 {c |}  {res} 43.6400416{txt}  {c |}
+    389 {c |}  {res} 59.2381703{txt}  {c |}
+    390 {c |}  {res}27.06128507{txt}  {c |}
+    391 {c |}  {res}54.14632719{txt}  {c |}
+    392 {c |}  {res}41.19363262{txt}  {c |}
+    393 {c |}  {res}48.51737266{txt}  {c |}
+    394 {c |}  {res}50.96551142{txt}  {c |}
+    395 {c |}  {res}71.62574353{txt}  {c |}
+    396 {c |}  {res}56.45119264{txt}  {c |}
+    397 {c |}  {res}64.78964174{txt}  {c |}
+    398 {c |}  {res}57.11823064{txt}  {c |}
+    399 {c |}  {res}45.78522817{txt}  {c |}
+    400 {c |}  {res}55.38917707{txt}  {c |}
+    401 {c |}  {res}59.50975114{txt}  {c |}
+    402 {c |}  {res}51.66759113{txt}  {c |}
+    403 {c |}  {res}49.41368907{txt}  {c |}
+    404 {c |}  {res}49.15174735{txt}  {c |}
+    405 {c |}  {res} 62.4165426{txt}  {c |}
+    406 {c |}  {res}57.03652402{txt}  {c |}
+    407 {c |}  {res}62.17980648{txt}  {c |}
+    408 {c |}  {res} 55.0265952{txt}  {c |}
+    409 {c |}  {res}54.27729048{txt}  {c |}
+    410 {c |}  {res}60.73876677{txt}  {c |}
+    411 {c |}  {res} 52.1564334{txt}  {c |}
+    412 {c |}  {res}50.93768185{txt}  {c |}
+    413 {c |}  {res}57.98006815{txt}  {c |}
+    414 {c |}  {res} 50.1089923{txt}  {c |}
+    415 {c |}  {res} 53.1401239{txt}  {c |}
+    416 {c |}  {res}44.35008909{txt}  {c |}
+    417 {c |}  {res}41.62135049{txt}  {c |}
+    418 {c |}  {res}46.37601684{txt}  {c |}
+    419 {c |}  {res}58.37781055{txt}  {c |}
+    420 {c |}  {res}53.10301136{txt}  {c |}
+    421 {c |}  {res}29.17316869{txt}  {c |}
+    422 {c |}  {res}47.59442399{txt}  {c |}
+    423 {c |}  {res}54.36577457{txt}  {c |}
+    424 {c |}  {res} 59.2045311{txt}  {c |}
+    425 {c |}  {res}41.41640959{txt}  {c |}
+    426 {c |}  {res}31.50078622{txt}  {c |}
+    427 {c |}  {res}59.11401286{txt}  {c |}
+    428 {c |}  {res}32.90559718{txt}  {c |}
+    429 {c |}  {res}55.67519612{txt}  {c |}
+    430 {c |}  {res}41.58315713{txt}  {c |}
+    431 {c |}  {res}38.29838251{txt}  {c |}
+    432 {c |}  {res}44.39447107{txt}  {c |}
+    433 {c |}  {res}63.32281567{txt}  {c |}
+    434 {c |}  {res}71.73682652{txt}  {c |}
+    435 {c |}  {res}63.74071857{txt}  {c |}
+    436 {c |}  {res}67.43407536{txt}  {c |}
+    437 {c |}  {res}50.23961304{txt}  {c |}
+    438 {c |}  {res}69.58565956{txt}  {c |}
+    439 {c |}  {res}39.18827153{txt}  {c |}
+    440 {c |}  {res}61.32929895{txt}  {c |}
+    441 {c |}  {res}50.49221735{txt}  {c |}
+    442 {c |}  {res}50.15834879{txt}  {c |}
+    443 {c |}  {res}62.21224778{txt}  {c |}
+    444 {c |}  {res}37.90107727{txt}  {c |}
+    445 {c |}  {res}57.06422789{txt}  {c |}
+    446 {c |}  {res}59.95441963{txt}  {c |}
+    447 {c |}  {res}30.74933978{txt}  {c |}
+    448 {c |}  {res}59.20053512{txt}  {c |}
+    449 {c |}  {res}40.42546062{txt}  {c |}
+    450 {c |}  {res}67.34503881{txt}  {c |}
+    451 {c |}  {res}66.85757614{txt}  {c |}
+    452 {c |}  {res}49.83941286{txt}  {c |}
+    453 {c |}  {res}61.38689144{txt}  {c |}
+    454 {c |}  {res}33.87575561{txt}  {c |}
+    455 {c |}  {res}38.86873487{txt}  {c |}
+    456 {c |}  {res} 72.7588691{txt}  {c |}
+    457 {c |}  {res} 56.8958026{txt}  {c |}
+    458 {c |}  {res}37.47545335{txt}  {c |}
+    459 {c |}  {res}58.70261759{txt}  {c |}
+    460 {c |}  {res}61.96440972{txt}  {c |}
+    461 {c |}  {res}59.67762797{txt}  {c |}
+    462 {c |}  {res} 63.2714641{txt}  {c |}
+    463 {c |}  {res}71.76272265{txt}  {c |}
+    464 {c |}  {res}62.83114633{txt}  {c |}
+    465 {c |}  {res}53.19207469{txt}  {c |}
+    466 {c |}  {res}43.68236498{txt}  {c |}
+    467 {c |}  {res}36.32886797{txt}  {c |}
+    468 {c |}  {res}38.77787796{txt}  {c |}
+    469 {c |}  {res}47.08443997{txt}  {c |}
+    470 {c |}  {res}64.11753459{txt}  {c |}
+    471 {c |}  {res}50.87666372{txt}  {c |}
+    472 {c |}  {res} 35.3983792{txt}  {c |}
+    473 {c |}  {res}45.01199972{txt}  {c |}
+    474 {c |}  {res}38.97509026{txt}  {c |}
+    475 {c |}  {res}59.53016035{txt}  {c |}
+    476 {c |}  {res}49.08625861{txt}  {c |}
+    477 {c |}  {res}39.69073145{txt}  {c |}
+    478 {c |}  {res}70.61067948{txt}  {c |}
+    479 {c |}  {res}54.39238439{txt}  {c |}
+    480 {c |}  {res}53.00116787{txt}  {c |}
+    481 {c |}  {res}50.44199083{txt}  {c |}
+    482 {c |}  {res}39.61313897{txt}  {c |}
+    483 {c |}  {res}30.96564581{txt}  {c |}
+    484 {c |}  {res}40.00160821{txt}  {c |}
+    485 {c |}  {res}45.49946004{txt}  {c |}
+    486 {c |}  {res}40.71395759{txt}  {c |}
+    487 {c |}  {res}58.26188997{txt}  {c |}
+    488 {c |}  {res}36.77854988{txt}  {c |}
+    489 {c |}  {res}51.70468341{txt}  {c |}
+    490 {c |}  {res}43.97796993{txt}  {c |}
+    491 {c |}  {res}49.24284183{txt}  {c |}
+    492 {c |}  {res}61.73945832{txt}  {c |}
+    493 {c |}  {res}40.32617279{txt}  {c |}
+    494 {c |}  {res}69.34775869{txt}  {c |}
+    495 {c |}  {res}43.00775969{txt}  {c |}
+    496 {c |}  {res}61.40673631{txt}  {c |}
+    497 {c |}  {res}28.85600951{txt}  {c |}
+    498 {c |}  {res}48.13194168{txt}  {c |}
+    499 {c |}  {res}49.28796826{txt}  {c |}
+    500 {c |}  {res}50.71500056{txt}  {c |}
+    501 {c |}  {res}55.58784653{txt}  {c |}
+    502 {c |}  {res}55.32715155{txt}  {c |}
+    503 {c |}  {res}76.35232078{txt}  {c |}
+    504 {c |}  {res}33.96988756{txt}  {c |}
+    505 {c |}  {res}42.98604863{txt}  {c |}
+    506 {c |}  {res}40.23310397{txt}  {c |}
+    507 {c |}  {res}34.34714143{txt}  {c |}
+    508 {c |}  {res}47.14867821{txt}  {c |}
+    509 {c |}  {res}58.19852177{txt}  {c |}
+    510 {c |}  {res}  36.575689{txt}  {c |}
+    511 {c |}  {res}55.20380172{txt}  {c |}
+    512 {c |}  {res}49.57200201{txt}  {c |}
+    513 {c |}  {res}61.39722424{txt}  {c |}
+    514 {c |}  {res}66.91114439{txt}  {c |}
+    515 {c |}  {res}44.71676896{txt}  {c |}
+    516 {c |}  {res}61.70677574{txt}  {c |}
+    517 {c |}  {res}60.54199543{txt}  {c |}
+    518 {c |}  {res}53.63996946{txt}  {c |}
+    519 {c |}  {res}53.82853402{txt}  {c |}
+    520 {c |}  {res}41.67481859{txt}  {c |}
+    521 {c |}  {res}32.97419443{txt}  {c |}
+    522 {c |}  {res}49.52179197{txt}  {c |}
+    523 {c |}  {res} 39.5991087{txt}  {c |}
+    524 {c |}  {res}52.34762569{txt}  {c |}
+    525 {c |}  {res} 47.4510189{txt}  {c |}
+    526 {c |}  {res}49.26301512{txt}  {c |}
+    527 {c |}  {res}57.25469894{txt}  {c |}
+    528 {c |}  {res}36.26513185{txt}  {c |}
+    529 {c |}  {res}59.23227561{txt}  {c |}
+    530 {c |}  {res}76.33713563{txt}  {c |}
+    531 {c |}  {res}  62.911207{txt}  {c |}
+    532 {c |}  {res}52.80954499{txt}  {c |}
+    533 {c |}  {res} 30.2760579{txt}  {c |}
+    534 {c |}  {res}70.85063311{txt}  {c |}
+    535 {c |}  {res}58.95567873{txt}  {c |}
+    536 {c |}  {res}65.73982739{txt}  {c |}
+    537 {c |}  {res}53.92505412{txt}  {c |}
+    538 {c |}  {res}40.72056669{txt}  {c |}
+    539 {c |}  {res}43.75880073{txt}  {c |}
+    540 {c |}  {res}53.83202994{txt}  {c |}
+    541 {c |}  {res} 52.2986665{txt}  {c |}
+    542 {c |}  {res}40.10255638{txt}  {c |}
+    543 {c |}  {res}38.65836396{txt}  {c |}
+    544 {c |}  {res}54.02282645{txt}  {c |}
+    545 {c |}  {res}45.70267541{txt}  {c |}
+    546 {c |}  {res}57.98453095{txt}  {c |}
+    547 {c |}  {res}69.13304557{txt}  {c |}
+    548 {c |}  {res}47.35967473{txt}  {c |}
+    549 {c |}  {res}64.52159902{txt}  {c |}
+    550 {c |}  {res}58.73428134{txt}  {c |}
+    551 {c |}  {res} 37.2568485{txt}  {c |}
+    552 {c |}  {res}36.82695633{txt}  {c |}
+    553 {c |}  {res}40.40564158{txt}  {c |}
+    554 {c |}  {res}72.13941943{txt}  {c |}
+    555 {c |}  {res}35.84679182{txt}  {c |}
+    556 {c |}  {res}38.09812008{txt}  {c |}
+    557 {c |}  {res}33.24225091{txt}  {c |}
+    558 {c |}  {res}66.13887719{txt}  {c |}
+    559 {c |}  {res} 40.4220962{txt}  {c |}
+    560 {c |}  {res}68.87163666{txt}  {c |}
+    561 {c |}  {res}43.21972846{txt}  {c |}
+    562 {c |}  {res}67.99052431{txt}  {c |}
+    563 {c |}  {res}52.46004209{txt}  {c |}
+    564 {c |}  {res}59.70373454{txt}  {c |}
+    565 {c |}  {res}47.19948391{txt}  {c |}
+    566 {c |}  {res}48.19759366{txt}  {c |}
+    567 {c |}  {res}43.80445419{txt}  {c |}
+    568 {c |}  {res}41.05240133{txt}  {c |}
+    569 {c |}  {res}35.93083301{txt}  {c |}
+    570 {c |}  {res}45.21031942{txt}  {c |}
+    571 {c |}  {res}66.23537153{txt}  {c |}
+    572 {c |}  {res}44.57236278{txt}  {c |}
+    573 {c |}  {res}32.34977089{txt}  {c |}
+    574 {c |}  {res}47.93705075{txt}  {c |}
+    575 {c |}  {res}41.08068712{txt}  {c |}
+    576 {c |}  {res} 46.0198688{txt}  {c |}
+    577 {c |}  {res}36.87970597{txt}  {c |}
+    578 {c |}  {res}65.45851029{txt}  {c |}
+    579 {c |}  {res}61.73163322{txt}  {c |}
+    580 {c |}  {res}65.89355834{txt}  {c |}
+    581 {c |}  {res}50.39367471{txt}  {c |}
+    582 {c |}  {res}57.74103693{txt}  {c |}
+    583 {c |}  {res}49.96012294{txt}  {c |}
+    584 {c |}  {res}72.18489622{txt}  {c |}
+    585 {c |}  {res}48.39162485{txt}  {c |}
+    586 {c |}  {res}54.01104034{txt}  {c |}
+    587 {c |}  {res}34.43990077{txt}  {c |}
+    588 {c |}  {res}49.39017313{txt}  {c |}
+    589 {c |}  {res}45.90123589{txt}  {c |}
+    590 {c |}  {res}49.69319641{txt}  {c |}
+    591 {c |}  {res}50.34800891{txt}  {c |}
+    592 {c |}  {res}34.99384132{txt}  {c |}
+    593 {c |}  {res}29.20504945{txt}  {c |}
+    594 {c |}  {res} 48.7856521{txt}  {c |}
+    595 {c |}  {res}64.34782962{txt}  {c |}
+    596 {c |}  {res}45.82506961{txt}  {c |}
+    597 {c |}  {res}53.07703816{txt}  {c |}
+    598 {c |}  {res}46.42748263{txt}  {c |}
+    599 {c |}  {res}64.42572697{txt}  {c |}
+    600 {c |}  {res}74.07860325{txt}  {c |}
+    601 {c |}  {res}49.43068262{txt}  {c |}
+    602 {c |}  {res}48.66902285{txt}  {c |}
+    603 {c |}  {res}53.08790967{txt}  {c |}
+    604 {c |}  {res} 47.1800482{txt}  {c |}
+    605 {c |}  {res}40.75366331{txt}  {c |}
+    606 {c |}  {res} 37.1004269{txt}  {c |}
+    607 {c |}  {res}30.91462006{txt}  {c |}
+    608 {c |}  {res}44.26600622{txt}  {c |}
+    609 {c |}  {res}61.18279879{txt}  {c |}
+    610 {c |}  {res}58.80620367{txt}  {c |}
+    611 {c |}  {res} 71.2174297{txt}  {c |}
+    612 {c |}  {res}64.82913743{txt}  {c |}
+    613 {c |}  {res}59.03785965{txt}  {c |}
+    614 {c |}  {res}44.94921341{txt}  {c |}
+    615 {c |}  {res}47.25252622{txt}  {c |}
+    616 {c |}  {res}43.81767222{txt}  {c |}
+    617 {c |}  {res}48.19319244{txt}  {c |}
+    618 {c |}  {res} 45.8170741{txt}  {c |}
+    619 {c |}  {res}68.21199779{txt}  {c |}
+    620 {c |}  {res}69.94767471{txt}  {c |}
+    621 {c |}  {res}59.86748286{txt}  {c |}
+    622 {c |}  {res}37.50984654{txt}  {c |}
+    623 {c |}  {res}58.99290726{txt}  {c |}
+    624 {c |}  {res}38.25786415{txt}  {c |}
+    625 {c |}  {res}60.11844518{txt}  {c |}
+    626 {c |}  {res} 40.9812424{txt}  {c |}
+    627 {c |}  {res}38.93727037{txt}  {c |}
+    628 {c |}  {res}71.91619982{txt}  {c |}
+    629 {c |}  {res}39.46904347{txt}  {c |}
+    630 {c |}  {res}55.84504096{txt}  {c |}
+    631 {c |}  {res}36.59124794{txt}  {c |}
+    632 {c |}  {res}37.78777506{txt}  {c |}
+    633 {c |}  {res}70.62223287{txt}  {c |}
+    634 {c |}  {res}60.34648831{txt}  {c |}
+    635 {c |}  {res}60.61314827{txt}  {c |}
+    636 {c |}  {res}58.04132754{txt}  {c |}
+    637 {c |}  {res} 44.3158258{txt}  {c |}
+    638 {c |}  {res}56.98362378{txt}  {c |}
+    639 {c |}  {res} 66.1430736{txt}  {c |}
+    640 {c |}  {res}49.21999713{txt}  {c |}
+    641 {c |}  {res}68.29038888{txt}  {c |}
+    642 {c |}  {res} 26.7164276{txt}  {c |}
+    643 {c |}  {res}38.10404085{txt}  {c |}
+    644 {c |}  {res}41.60019188{txt}  {c |}
+    645 {c |}  {res}38.07751667{txt}  {c |}
+    646 {c |}  {res}41.67538886{txt}  {c |}
+    647 {c |}  {res}70.26636553{txt}  {c |}
+    648 {c |}  {res}45.08072362{txt}  {c |}
+    649 {c |}  {res}57.11928246{txt}  {c |}
+    650 {c |}  {res}50.20196169{txt}  {c |}
+    651 {c |}  {res}48.15093215{txt}  {c |}
+    652 {c |}  {res} 55.0851929{txt}  {c |}
+    653 {c |}  {res}54.01600181{txt}  {c |}
+    654 {c |}  {res}32.67378176{txt}  {c |}
+    655 {c |}  {res}42.61496117{txt}  {c |}
+    656 {c |}  {res} 76.8849018{txt}  {c |}
+    657 {c |}  {res}59.76646994{txt}  {c |}
+    658 {c |}  {res}62.41238017{txt}  {c |}
+    659 {c |}  {res}  47.559899{txt}  {c |}
+    660 {c |}  {res}66.81521058{txt}  {c |}
+    661 {c |}  {res}50.12407741{txt}  {c |}
+    662 {c |}  {res}65.90628576{txt}  {c |}
+    663 {c |}  {res}56.00580986{txt}  {c |}
+    664 {c |}  {res}50.35757826{txt}  {c |}
+    665 {c |}  {res} 65.2602182{txt}  {c |}
+    666 {c |}  {res} 56.9707505{txt}  {c |}
+    667 {c |}  {res}41.55552482{txt}  {c |}
+    668 {c |}  {res}64.55318454{txt}  {c |}
+    669 {c |}  {res}48.97112096{txt}  {c |}
+    670 {c |}  {res}50.75497567{txt}  {c |}
+    671 {c |}  {res}53.87735314{txt}  {c |}
+    672 {c |}  {res}44.98899265{txt}  {c |}
+    673 {c |}  {res}58.23735887{txt}  {c |}
+    674 {c |}  {res}58.08703593{txt}  {c |}
+    675 {c |}  {res}51.01985388{txt}  {c |}
+    676 {c |}  {res}39.55974862{txt}  {c |}
+    677 {c |}  {res} 40.5715283{txt}  {c |}
+    678 {c |}  {res}61.11373985{txt}  {c |}
+    679 {c |}  {res}55.57645243{txt}  {c |}
+    680 {c |}  {res}24.82144017{txt}  {c |}
+    681 {c |}  {res}48.58555434{txt}  {c |}
+    682 {c |}  {res}54.83514811{txt}  {c |}
+    683 {c |}  {res}58.63323658{txt}  {c |}
+    684 {c |}  {res} 46.1790028{txt}  {c |}
+    685 {c |}  {res}52.14462535{txt}  {c |}
+    686 {c |}  {res}49.02667388{txt}  {c |}
+    687 {c |}  {res}43.08496217{txt}  {c |}
+    688 {c |}  {res}53.39358625{txt}  {c |}
+    689 {c |}  {res} 54.2663541{txt}  {c |}
+    690 {c |}  {res}47.72251557{txt}  {c |}
+    691 {c |}  {res}49.74531196{txt}  {c |}
+    692 {c |}  {res}53.95322906{txt}  {c |}
+    693 {c |}  {res} 43.5769899{txt}  {c |}
+    694 {c |}  {res}28.15463118{txt}  {c |}
+    695 {c |}  {res}66.83040493{txt}  {c |}
+    696 {c |}  {res}57.09363672{txt}  {c |}
+    697 {c |}  {res}57.50262436{txt}  {c |}
+    698 {c |}  {res}55.33476312{txt}  {c |}
+    699 {c |}  {res}55.09406821{txt}  {c |}
+    700 {c |}  {res}59.93311558{txt}  {c |}
+    701 {c |}  {res}44.49190033{txt}  {c |}
+    702 {c |}  {res}39.57285573{txt}  {c |}
+    703 {c |}  {res}41.23658211{txt}  {c |}
+    704 {c |}  {res}52.27452713{txt}  {c |}
+    705 {c |}  {res}62.97508644{txt}  {c |}
+    706 {c |}  {res}55.94622224{txt}  {c |}
+    707 {c |}  {res}53.17324425{txt}  {c |}
+    708 {c |}  {res}43.56683644{txt}  {c |}
+    709 {c |}  {res}44.10749036{txt}  {c |}
+    710 {c |}  {res}64.94792738{txt}  {c |}
+    711 {c |}  {res} 72.5588396{txt}  {c |}
+    712 {c |}  {res}55.05613432{txt}  {c |}
+    713 {c |}  {res}33.74098732{txt}  {c |}
+    714 {c |}  {res}27.43453193{txt}  {c |}
+    715 {c |}  {res}47.23654168{txt}  {c |}
+    716 {c |}  {res}53.86544425{txt}  {c |}
+    717 {c |}  {res}36.79316505{txt}  {c |}
+    718 {c |}  {res}33.04991595{txt}  {c |}
+    719 {c |}  {res}49.80348709{txt}  {c |}
+    720 {c |}  {res}42.63548314{txt}  {c |}
+    721 {c |}  {res}45.28077057{txt}  {c |}
+    722 {c |}  {res} 31.9838169{txt}  {c |}
+    723 {c |}  {res}32.70325501{txt}  {c |}
+    724 {c |}  {res}32.23236331{txt}  {c |}
+    725 {c |}  {res} 45.6352624{txt}  {c |}
+    726 {c |}  {res}49.06762421{txt}  {c |}
+    727 {c |}  {res}38.92650206{txt}  {c |}
+    728 {c |}  {res}48.73172765{txt}  {c |}
+    729 {c |}  {res}34.00188191{txt}  {c |}
+    730 {c |}  {res}59.24084239{txt}  {c |}
+    731 {c |}  {res}49.96540528{txt}  {c |}
+    732 {c |}  {res}52.05331006{txt}  {c |}
+    733 {c |}  {res}37.56070981{txt}  {c |}
+    734 {c |}  {res}48.29692648{txt}  {c |}
+    735 {c |}  {res}58.79501079{txt}  {c |}
+    736 {c |}  {res}31.79750105{txt}  {c |}
+    737 {c |}  {res}40.18721573{txt}  {c |}
+    738 {c |}  {res}58.02147579{txt}  {c |}
+    739 {c |}  {res}57.39030601{txt}  {c |}
+    740 {c |}  {res}63.07099368{txt}  {c |}
+    741 {c |}  {res}37.01321066{txt}  {c |}
+    742 {c |}  {res}62.49690146{txt}  {c |}
+    743 {c |}  {res}49.18336137{txt}  {c |}
+    744 {c |}  {res}73.96209551{txt}  {c |}
+    745 {c |}  {res}71.60950164{txt}  {c |}
+    746 {c |}  {res}54.98173932{txt}  {c |}
+    747 {c |}  {res}47.02742017{txt}  {c |}
+    748 {c |}  {res}49.30984808{txt}  {c |}
+    749 {c |}  {res}54.23196986{txt}  {c |}
+    750 {c |}  {res}55.18978479{txt}  {c |}
+    751 {c |}  {res}59.64562883{txt}  {c |}
+    752 {c |}  {res}50.81519078{txt}  {c |}
+    753 {c |}  {res}47.50874262{txt}  {c |}
+    754 {c |}  {res}33.61854973{txt}  {c |}
+    755 {c |}  {res}41.30465161{txt}  {c |}
+    756 {c |}  {res}41.95582192{txt}  {c |}
+    757 {c |}  {res}45.49408616{txt}  {c |}
+    758 {c |}  {res} 37.1368454{txt}  {c |}
+    759 {c |}  {res}55.19519722{txt}  {c |}
+    760 {c |}  {res}64.68308728{txt}  {c |}
+    761 {c |}  {res}63.10218892{txt}  {c |}
+    762 {c |}  {res}46.07988785{txt}  {c |}
+    763 {c |}  {res}52.45432323{txt}  {c |}
+    764 {c |}  {res} 39.3017084{txt}  {c |}
+    765 {c |}  {res}72.82334258{txt}  {c |}
+    766 {c |}  {res}35.11563347{txt}  {c |}
+    767 {c |}  {res}66.61706244{txt}  {c |}
+    768 {c |}  {res}52.16586828{txt}  {c |}
+    769 {c |}  {res}44.86538851{txt}  {c |}
+    770 {c |}  {res}47.90557391{txt}  {c |}
+    771 {c |}  {res}54.13886562{txt}  {c |}
+    772 {c |}  {res}29.12338506{txt}  {c |}
+    773 {c |}  {res}52.68687817{txt}  {c |}
+    774 {c |}  {res}51.04383553{txt}  {c |}
+    775 {c |}  {res}62.22695537{txt}  {c |}
+    776 {c |}  {res}66.02586992{txt}  {c |}
+    777 {c |}  {res}43.18498156{txt}  {c |}
+    778 {c |}  {res}51.30518271{txt}  {c |}
+    779 {c |}  {res}66.31188443{txt}  {c |}
+    780 {c |}  {res}49.16620204{txt}  {c |}
+    781 {c |}  {res}63.77415724{txt}  {c |}
+    782 {c |}  {res}  60.317052{txt}  {c |}
+    783 {c |}  {res}35.84833951{txt}  {c |}
+    784 {c |}  {res}36.78101051{txt}  {c |}
+    785 {c |}  {res}50.01694913{txt}  {c |}
+    786 {c |}  {res}62.21560854{txt}  {c |}
+    787 {c |}  {res}44.09761433{txt}  {c |}
+    788 {c |}  {res}60.79316238{txt}  {c |}
+    789 {c |}  {res} 36.6140486{txt}  {c |}
+    790 {c |}  {res}68.86278542{txt}  {c |}
+    791 {c |}  {res}55.78276098{txt}  {c |}
+    792 {c |}  {res}62.29955808{txt}  {c |}
+    793 {c |}  {res}52.38356207{txt}  {c |}
+    794 {c |}  {res}48.47359487{txt}  {c |}
+    795 {c |}  {res}59.22862713{txt}  {c |}
+    796 {c |}  {res}36.19069652{txt}  {c |}
+    797 {c |}  {res}59.85658567{txt}  {c |}
+    798 {c |}  {res}57.95619118{txt}  {c |}
+    799 {c |}  {res}71.13845039{txt}  {c |}
+    800 {c |}  {res}67.80368394{txt}  {c |}
+    801 {c |}  {res}54.08515577{txt}  {c |}
+    802 {c |}  {res}48.24796501{txt}  {c |}
+    803 {c |}  {res}58.75804988{txt}  {c |}
+    804 {c |}  {res}42.15743268{txt}  {c |}
+    805 {c |}  {res}40.78903041{txt}  {c |}
+    806 {c |}  {res}53.61539899{txt}  {c |}
+    807 {c |}  {res}64.14979274{txt}  {c |}
+    808 {c |}  {res}  57.200211{txt}  {c |}
+    809 {c |}  {res}33.24563341{txt}  {c |}
+    810 {c |}  {res}32.52466702{txt}  {c |}
+    811 {c |}  {res}30.76282843{txt}  {c |}
+    812 {c |}  {res}49.60580977{txt}  {c |}
+    813 {c |}  {res} 44.9299362{txt}  {c |}
+    814 {c |}  {res}59.86227665{txt}  {c |}
+    815 {c |}  {res}59.87106698{txt}  {c |}
+    816 {c |}  {res}46.54698324{txt}  {c |}
+    817 {c |}  {res}51.79555627{txt}  {c |}
+    818 {c |}  {res}40.23294692{txt}  {c |}
+    819 {c |}  {res}40.77414919{txt}  {c |}
+    820 {c |}  {res}47.48233681{txt}  {c |}
+    821 {c |}  {res}34.96623468{txt}  {c |}
+    822 {c |}  {res}53.43219506{txt}  {c |}
+    823 {c |}  {res}65.92035761{txt}  {c |}
+    824 {c |}  {res}39.92937964{txt}  {c |}
+    825 {c |}  {res} 58.9424958{txt}  {c |}
+    826 {c |}  {res}56.88021326{txt}  {c |}
+    827 {c |}  {res}59.90149378{txt}  {c |}
+    828 {c |}  {res}40.62408775{txt}  {c |}
+    829 {c |}  {res}56.46624533{txt}  {c |}
+    830 {c |}  {res} 31.2508166{txt}  {c |}
+    831 {c |}  {res}45.68135266{txt}  {c |}
+    832 {c |}  {res}39.91802859{txt}  {c |}
+    833 {c |}  {res}67.16881468{txt}  {c |}
+    834 {c |}  {res}41.03793736{txt}  {c |}
+    835 {c |}  {res}46.64008542{txt}  {c |}
+    836 {c |}  {res}64.44067143{txt}  {c |}
+    837 {c |}  {res}44.26880969{txt}  {c |}
+    838 {c |}  {res}36.73362792{txt}  {c |}
+    839 {c |}  {res}71.16048974{txt}  {c |}
+    840 {c |}  {res}70.39314464{txt}  {c |}
+    841 {c |}  {res}69.96162018{txt}  {c |}
+    842 {c |}  {res}60.29615977{txt}  {c |}
+    843 {c |}  {res} 46.0919586{txt}  {c |}
+    844 {c |}  {res}63.74470096{txt}  {c |}
+    845 {c |}  {res}48.43857498{txt}  {c |}
+    846 {c |}  {res}50.72370518{txt}  {c |}
+    847 {c |}  {res}49.45127551{txt}  {c |}
+    848 {c |}  {res} 50.3348228{txt}  {c |}
+    849 {c |}  {res}54.97413154{txt}  {c |}
+    850 {c |}  {res}61.00832325{txt}  {c |}
+    851 {c |}  {res}47.82371081{txt}  {c |}
+    852 {c |}  {res}67.88182074{txt}  {c |}
+    853 {c |}  {res}39.34303364{txt}  {c |}
+    854 {c |}  {res}53.49475388{txt}  {c |}
+    855 {c |}  {res}63.97944576{txt}  {c |}
+    856 {c |}  {res}34.68397053{txt}  {c |}
+    857 {c |}  {res}64.49373784{txt}  {c |}
+    858 {c |}  {res}63.59631672{txt}  {c |}
+    859 {c |}  {res} 74.6211359{txt}  {c |}
+    860 {c |}  {res}51.64701577{txt}  {c |}
+    861 {c |}  {res}63.35618038{txt}  {c |}
+    862 {c |}  {res}47.70034552{txt}  {c |}
+    863 {c |}  {res}49.11862215{txt}  {c |}
+    864 {c |}  {res}51.35735869{txt}  {c |}
+    865 {c |}  {res}51.86576277{txt}  {c |}
+    866 {c |}  {res}59.25507494{txt}  {c |}
+    867 {c |}  {res}41.08845494{txt}  {c |}
+    868 {c |}  {res}30.24938786{txt}  {c |}
+    869 {c |}  {res}65.88395361{txt}  {c |}
+    870 {c |}  {res}52.34685068{txt}  {c |}
+    871 {c |}  {res}54.74646767{txt}  {c |}
+    872 {c |}  {res}37.80138878{txt}  {c |}
+    873 {c |}  {res}38.16540234{txt}  {c |}
+    874 {c |}  {res}44.60253725{txt}  {c |}
+    875 {c |}  {res}50.83209454{txt}  {c |}
+    876 {c |}  {res}46.94293764{txt}  {c |}
+    877 {c |}  {res}43.92635323{txt}  {c |}
+    878 {c |}  {res}54.14188621{txt}  {c |}
+    879 {c |}  {res}43.71536345{txt}  {c |}
+    880 {c |}  {res}70.07146532{txt}  {c |}
+    881 {c |}  {res}45.72814045{txt}  {c |}
+    882 {c |}  {res}52.04820001{txt}  {c |}
+    883 {c |}  {res}57.66669749{txt}  {c |}
+    884 {c |}  {res}46.74557884{txt}  {c |}
+    885 {c |}  {res}54.52569938{txt}  {c |}
+    886 {c |}  {res}28.22186821{txt}  {c |}
+    887 {c |}  {res}71.34603631{txt}  {c |}
+    888 {c |}  {res}44.35423201{txt}  {c |}
+    889 {c |}  {res}51.42695984{txt}  {c |}
+    890 {c |}  {res}65.46473905{txt}  {c |}
+    891 {c |}  {res}44.02465425{txt}  {c |}
+    892 {c |}  {res}42.73750957{txt}  {c |}
+    893 {c |}  {res}47.21170523{txt}  {c |}
+    894 {c |}  {res}71.18495208{txt}  {c |}
+    895 {c |}  {res}45.28041686{txt}  {c |}
+    896 {c |}  {res}36.92682226{txt}  {c |}
+    897 {c |}  {res}66.68900069{txt}  {c |}
+    898 {c |}  {res}45.01156798{txt}  {c |}
+    899 {c |}  {res}67.50863929{txt}  {c |}
+    900 {c |}  {res}62.83990349{txt}  {c |}
+    901 {c |}  {res} 54.9915396{txt}  {c |}
+    902 {c |}  {res}58.92600694{txt}  {c |}
+    903 {c |}  {res}43.39808087{txt}  {c |}
+    904 {c |}  {res}48.67118707{txt}  {c |}
+    905 {c |}  {res}35.14777603{txt}  {c |}
+    906 {c |}  {res}44.06715335{txt}  {c |}
+    907 {c |}  {res}62.25758244{txt}  {c |}
+    908 {c |}  {res}58.79292394{txt}  {c |}
+    909 {c |}  {res}57.26670133{txt}  {c |}
+    910 {c |}  {res}40.91464782{txt}  {c |}
+    911 {c |}  {res}39.20823414{txt}  {c |}
+    912 {c |}  {res}55.34704494{txt}  {c |}
+    913 {c |}  {res}36.98445228{txt}  {c |}
+    914 {c |}  {res}  62.761895{txt}  {c |}
+    915 {c |}  {res}42.64496514{txt}  {c |}
+    916 {c |}  {res}66.38214159{txt}  {c |}
+    917 {c |}  {res}52.34783184{txt}  {c |}
+    918 {c |}  {res}45.27932974{txt}  {c |}
+    919 {c |}  {res}26.70513539{txt}  {c |}
+    920 {c |}  {res}37.39639513{txt}  {c |}
+    921 {c |}  {res}64.97082883{txt}  {c |}
+    922 {c |}  {res}58.30424084{txt}  {c |}
+    923 {c |}  {res}45.73339182{txt}  {c |}
+    924 {c |}  {res}41.54971031{txt}  {c |}
+    925 {c |}  {res}68.19907628{txt}  {c |}
+    926 {c |}  {res} 48.9945109{txt}  {c |}
+    927 {c |}  {res}60.50614995{txt}  {c |}
+    928 {c |}  {res}55.43876278{txt}  {c |}
+    929 {c |}  {res}42.02411687{txt}  {c |}
+    930 {c |}  {res}35.29508847{txt}  {c |}
+    931 {c |}  {res}44.68640513{txt}  {c |}
+    932 {c |}  {res} 52.8185627{txt}  {c |}
+    933 {c |}  {res}34.98929982{txt}  {c |}
+    934 {c |}  {res}56.52743194{txt}  {c |}
+    935 {c |}  {res}49.74990842{txt}  {c |}
+    936 {c |}  {res}38.34255038{txt}  {c |}
+    937 {c |}  {res}48.93023436{txt}  {c |}
+    938 {c |}  {res}40.33508806{txt}  {c |}
+    939 {c |}  {res}36.66877734{txt}  {c |}
+    940 {c |}  {res}45.59584641{txt}  {c |}
+    941 {c |}  {res}42.37822617{txt}  {c |}
+    942 {c |}  {res} 42.7632776{txt}  {c |}
+    943 {c |}  {res}67.81147607{txt}  {c |}
+    944 {c |}  {res}64.15229977{txt}  {c |}
+    945 {c |}  {res}64.54082373{txt}  {c |}
+    946 {c |}  {res}50.95437332{txt}  {c |}
+    947 {c |}  {res}37.72997826{txt}  {c |}
+    948 {c |}  {res}57.12001666{txt}  {c |}
+    949 {c |}  {res}49.13539242{txt}  {c |}
+    950 {c |}  {res} 55.0042805{txt}  {c |}
+    951 {c |}  {res}67.87746606{txt}  {c |}
+    952 {c |}  {res}50.72425773{txt}  {c |}
+    953 {c |}  {res}28.12643815{txt}  {c |}
+    954 {c |}  {res}57.09965372{txt}  {c |}
+    955 {c |}  {res}62.84161199{txt}  {c |}
+    956 {c |}  {res}35.74575127{txt}  {c |}
+    957 {c |}  {res}58.82227852{txt}  {c |}
+    958 {c |}  {res}49.76528002{txt}  {c |}
+    959 {c |}  {res} 49.8245192{txt}  {c |}
+    960 {c |}  {res}39.94426274{txt}  {c |}
+    961 {c |}  {res}61.00052624{txt}  {c |}
+    962 {c |}  {res}40.00543557{txt}  {c |}
+    963 {c |}  {res}42.74607676{txt}  {c |}
+    964 {c |}  {res}43.90816528{txt}  {c |}
+    965 {c |}  {res}41.43180046{txt}  {c |}
+    966 {c |}  {res}60.18764001{txt}  {c |}
+    967 {c |}  {res}50.23101255{txt}  {c |}
+    968 {c |}  {res}50.40307173{txt}  {c |}
+    969 {c |}  {res}39.59460104{txt}  {c |}
+    970 {c |}  {res} 70.6210941{txt}  {c |}
+    971 {c |}  {res}60.49258996{txt}  {c |}
+    972 {c |}  {res}58.66977109{txt}  {c |}
+    973 {c |}  {res} 59.5014672{txt}  {c |}
+    974 {c |}  {res} 31.4350091{txt}  {c |}
+    975 {c |}  {res}64.67422912{txt}  {c |}
+    976 {c |}  {res}41.98171435{txt}  {c |}
+    977 {c |}  {res}45.52468647{txt}  {c |}
+    978 {c |}  {res} 50.2991263{txt}  {c |}
+    979 {c |}  {res}50.12973205{txt}  {c |}
+    980 {c |}  {res}68.25294659{txt}  {c |}
+    981 {c |}  {res}65.77028192{txt}  {c |}
+    982 {c |}  {res}41.08879746{txt}  {c |}
+    983 {c |}  {res}61.84560904{txt}  {c |}
+    984 {c |}  {res}55.63732737{txt}  {c |}
+    985 {c |}  {res}43.73912728{txt}  {c |}
+    986 {c |}  {res}  31.976433{txt}  {c |}
+    987 {c |}  {res}63.18490725{txt}  {c |}
+    988 {c |}  {res}53.98898984{txt}  {c |}
+    989 {c |}  {res}54.53460217{txt}  {c |}
+    990 {c |}  {res}48.56309562{txt}  {c |}
+    991 {c |}  {res}51.07416753{txt}  {c |}
+    992 {c |}  {res}46.45663043{txt}  {c |}
+    993 {c |}  {res}43.70109669{txt}  {c |}
+    994 {c |}  {res}44.94881843{txt}  {c |}
+    995 {c |}  {res} 58.8710872{txt}  {c |}
+    996 {c |}  {res}45.40533584{txt}  {c |}
+    997 {c |}  {res}31.23553372{txt}  {c |}
+    998 {c |}  {res}36.15895148{txt}  {c |}
+    999 {c |}  {res}34.85756388{txt}  {c |}
+  1,000 {c |}  {res}38.99841007{txt}  {c |}
+  1,001 {c |}  {res}47.57630885{txt}  {c |}
+  1,002 {c |}  {res}56.73547378{txt}  {c |}
+  1,003 {c |}  {res}64.16443363{txt}  {c |}
+  1,004 {c |}  {res} 50.2197584{txt}  {c |}
+  1,005 {c |}  {res}48.18247127{txt}  {c |}
+  1,006 {c |}  {res}52.45202726{txt}  {c |}
+  1,007 {c |}  {res}44.68845388{txt}  {c |}
+  1,008 {c |}  {res}62.22528843{txt}  {c |}
+  1,009 {c |}  {res}36.96557767{txt}  {c |}
+  1,010 {c |}  {res}51.25023179{txt}  {c |}
+  1,011 {c |}  {res}69.40025716{txt}  {c |}
+  1,012 {c |}  {res}45.62463739{txt}  {c |}
+  1,013 {c |}  {res}48.97627045{txt}  {c |}
+  1,014 {c |}  {res}35.85672643{txt}  {c |}
+  1,015 {c |}  {res}55.94673262{txt}  {c |}
+  1,016 {c |}  {res}65.51354587{txt}  {c |}
+  1,017 {c |}  {res}64.81590145{txt}  {c |}
+  1,018 {c |}  {res}39.79680461{txt}  {c |}
+  1,019 {c |}  {res}41.05842402{txt}  {c |}
+  1,020 {c |}  {res}47.22848022{txt}  {c |}
+  1,021 {c |}  {res}50.87133138{txt}  {c |}
+  1,022 {c |}  {res}47.40179897{txt}  {c |}
+  1,023 {c |}  {res}65.49613494{txt}  {c |}
+  1,024 {c |}  {res}40.84299976{txt}  {c |}
+  1,025 {c |}  {res}56.95587776{txt}  {c |}
+  1,026 {c |}  {res}37.11209021{txt}  {c |}
+  1,027 {c |}  {res}40.82906384{txt}  {c |}
+  1,028 {c |}  {res}38.43211177{txt}  {c |}
+  1,029 {c |}  {res}48.83825878{txt}  {c |}
+  1,030 {c |}  {res}42.97787734{txt}  {c |}
+  1,031 {c |}  {res}69.94290857{txt}  {c |}
+  1,032 {c |}  {res}34.40440189{txt}  {c |}
+  1,033 {c |}  {res}39.16585404{txt}  {c |}
+  1,034 {c |}  {res}38.47556908{txt}  {c |}
+  1,035 {c |}  {res}59.08019639{txt}  {c |}
+  1,036 {c |}  {res}41.80603141{txt}  {c |}
+  1,037 {c |}  {res}47.97951246{txt}  {c |}
+  1,038 {c |}  {res}53.14049254{txt}  {c |}
+  1,039 {c |}  {res} 57.7000539{txt}  {c |}
+  1,040 {c |}  {res}55.44010141{txt}  {c |}
+  1,041 {c |}  {res}44.12497932{txt}  {c |}
+  1,042 {c |}  {res}52.07072763{txt}  {c |}
+  1,043 {c |}  {res}34.40993201{txt}  {c |}
+  1,044 {c |}  {res}54.85274433{txt}  {c |}
+  1,045 {c |}  {res} 70.1783014{txt}  {c |}
+  1,046 {c |}  {res}48.55652851{txt}  {c |}
+  1,047 {c |}  {res}35.99162185{txt}  {c |}
+  1,048 {c |}  {res}61.58628094{txt}  {c |}
+  1,049 {c |}  {res}67.65198834{txt}  {c |}
+  1,050 {c |}  {res} 59.4235021{txt}  {c |}
+  1,051 {c |}  {res}31.91082648{txt}  {c |}
+  1,052 {c |}  {res} 42.7137188{txt}  {c |}
+  1,053 {c |}  {res}60.66148645{txt}  {c |}
+  1,054 {c |}  {res}64.58212377{txt}  {c |}
+  1,055 {c |}  {res}57.46811396{txt}  {c |}
+  1,056 {c |}  {res} 56.2565878{txt}  {c |}
+  1,057 {c |}  {res}61.60848202{txt}  {c |}
+  1,058 {c |}  {res}51.54373509{txt}  {c |}
+  1,059 {c |}  {res}65.82418275{txt}  {c |}
+  1,060 {c |}  {res}45.64823189{txt}  {c |}
+  1,061 {c |}  {res}53.31209904{txt}  {c |}
+  1,062 {c |}  {res}53.35884519{txt}  {c |}
+  1,063 {c |}  {res}51.32500105{txt}  {c |}
+  1,064 {c |}  {res}41.55869797{txt}  {c |}
+  1,065 {c |}  {res}40.76954192{txt}  {c |}
+  1,066 {c |}  {res}45.74020946{txt}  {c |}
+  1,067 {c |}  {res}32.34419483{txt}  {c |}
+  1,068 {c |}  {res}54.15014726{txt}  {c |}
+  1,069 {c |}  {res}51.11012549{txt}  {c |}
+  1,070 {c |}  {res}46.49083676{txt}  {c |}
+  1,071 {c |}  {res}37.18236702{txt}  {c |}
+  1,072 {c |}  {res}48.88546035{txt}  {c |}
+  1,073 {c |}  {res}70.10634474{txt}  {c |}
+  1,074 {c |}  {res}38.11546719{txt}  {c |}
+  1,075 {c |}  {res}60.22813317{txt}  {c |}
+  1,076 {c |}  {res}35.02256677{txt}  {c |}
+  1,077 {c |}  {res}52.07842137{txt}  {c |}
+  1,078 {c |}  {res}55.39026123{txt}  {c |}
+  1,079 {c |}  {res}59.12215428{txt}  {c |}
+  1,080 {c |}  {res}45.75422625{txt}  {c |}
+  1,081 {c |}  {res}46.35578072{txt}  {c |}
+  1,082 {c |}  {res} 62.7949593{txt}  {c |}
+  1,083 {c |}  {res}73.07191257{txt}  {c |}
+  1,084 {c |}  {res}38.70874464{txt}  {c |}
+  1,085 {c |}  {res}56.15571976{txt}  {c |}
+  1,086 {c |}  {res}63.45483867{txt}  {c |}
+  1,087 {c |}  {res} 55.0243787{txt}  {c |}
+  1,088 {c |}  {res}58.79332838{txt}  {c |}
+  1,089 {c |}  {res}62.58389971{txt}  {c |}
+  1,090 {c |}  {res}44.66031064{txt}  {c |}
+  1,091 {c |}  {res}42.44824073{txt}  {c |}
+  1,092 {c |}  {res}62.57737533{txt}  {c |}
+  1,093 {c |}  {res}60.43783795{txt}  {c |}
+  1,094 {c |}  {res}66.64186318{txt}  {c |}
+  1,095 {c |}  {res}42.15990456{txt}  {c |}
+  1,096 {c |}  {res}38.06866283{txt}  {c |}
+  1,097 {c |}  {res}34.86690299{txt}  {c |}
+  1,098 {c |}  {res} 59.5499992{txt}  {c |}
+  1,099 {c |}  {res}56.36983215{txt}  {c |}
+  1,100 {c |}  {res}56.46185223{txt}  {c |}
+  1,101 {c |}  {res}43.99551617{txt}  {c |}
+  1,102 {c |}  {res}63.75984337{txt}  {c |}
+  1,103 {c |}  {res}46.69629376{txt}  {c |}
+  1,104 {c |}  {res}37.84884542{txt}  {c |}
+  1,105 {c |}  {res}67.74896421{txt}  {c |}
+  1,106 {c |}  {res}40.48548888{txt}  {c |}
+  1,107 {c |}  {res}66.20544311{txt}  {c |}
+  1,108 {c |}  {res}61.42332765{txt}  {c |}
+  1,109 {c |}  {res}54.29130531{txt}  {c |}
+  1,110 {c |}  {res}37.19985886{txt}  {c |}
+  1,111 {c |}  {res}53.74605443{txt}  {c |}
+  1,112 {c |}  {res}56.62355305{txt}  {c |}
+  1,113 {c |}  {res}44.22396206{txt}  {c |}
+  1,114 {c |}  {res}47.45486388{txt}  {c |}
+  1,115 {c |}  {res}48.32209264{txt}  {c |}
+  1,116 {c |}  {res}73.67965404{txt}  {c |}
+  1,117 {c |}  {res}36.29896722{txt}  {c |}
+  1,118 {c |}  {res}45.36132142{txt}  {c |}
+  1,119 {c |}  {res}51.71554677{txt}  {c |}
+  1,120 {c |}  {res}35.48793594{txt}  {c |}
+  1,121 {c |}  {res}59.63487067{txt}  {c |}
+  1,122 {c |}  {res}40.42649334{txt}  {c |}
+  1,123 {c |}  {res}55.95586096{txt}  {c |}
+  1,124 {c |}  {res}47.62702428{txt}  {c |}
+  1,125 {c |}  {res}40.10020546{txt}  {c |}
+  1,126 {c |}  {res} 47.3754672{txt}  {c |}
+  1,127 {c |}  {res}59.33710647{txt}  {c |}
+  1,128 {c |}  {res}42.32710703{txt}  {c |}
+  1,129 {c |}  {res}48.89547732{txt}  {c |}
+  1,130 {c |}  {res}53.06748788{txt}  {c |}
+  1,131 {c |}  {res} 48.8867616{txt}  {c |}
+  1,132 {c |}  {res} 57.9225089{txt}  {c |}
+  1,133 {c |}  {res}39.55060636{txt}  {c |}
+  1,134 {c |}  {res}39.71418955{txt}  {c |}
+  1,135 {c |}  {res}58.50047174{txt}  {c |}
+  1,136 {c |}  {res}32.35456292{txt}  {c |}
+  1,137 {c |}  {res}68.38016205{txt}  {c |}
+  1,138 {c |}  {res}46.80782726{txt}  {c |}
+  1,139 {c |}  {res}64.71452139{txt}  {c |}
+  1,140 {c |}  {res}37.81257527{txt}  {c |}
+  1,141 {c |}  {res}40.20899627{txt}  {c |}
+  1,142 {c |}  {res} 33.6486388{txt}  {c |}
+  1,143 {c |}  {res}53.40655407{txt}  {c |}
+  1,144 {c |}  {res}48.86934538{txt}  {c |}
+  1,145 {c |}  {res} 48.6040747{txt}  {c |}
+  1,146 {c |}  {res}71.76763221{txt}  {c |}
+  1,147 {c |}  {res}57.56792071{txt}  {c |}
+  1,148 {c |}  {res}43.74348269{txt}  {c |}
+  1,149 {c |}  {res}42.80399306{txt}  {c |}
+  1,150 {c |}  {res}54.62861383{txt}  {c |}
+  1,151 {c |}  {res}60.98232781{txt}  {c |}
+  1,152 {c |}  {res}58.90034551{txt}  {c |}
+  1,153 {c |}  {res}60.26033975{txt}  {c |}
+  1,154 {c |}  {res}60.50268258{txt}  {c |}
+  1,155 {c |}  {res}53.78377273{txt}  {c |}
+  1,156 {c |}  {res}39.72464708{txt}  {c |}
+  1,157 {c |}  {res}57.57139087{txt}  {c |}
+  1,158 {c |}  {res}41.75786358{txt}  {c |}
+  1,159 {c |}  {res}40.60794181{txt}  {c |}
+  1,160 {c |}  {res}68.66381993{txt}  {c |}
+  1,161 {c |}  {res}36.18873486{txt}  {c |}
+  1,162 {c |}  {res}47.33606321{txt}  {c |}
+  1,163 {c |}  {res} 40.5831082{txt}  {c |}
+  1,164 {c |}  {res}50.05584041{txt}  {c |}
+  1,165 {c |}  {res}58.35548102{txt}  {c |}
+  1,166 {c |}  {res}52.90531265{txt}  {c |}
+  1,167 {c |}  {res}  60.088849{txt}  {c |}
+  1,168 {c |}  {res}54.65002366{txt}  {c |}
+  1,169 {c |}  {res}42.20449971{txt}  {c |}
+  1,170 {c |}  {res}64.72679209{txt}  {c |}
+  1,171 {c |}  {res}56.19583475{txt}  {c |}
+  1,172 {c |}  {res}59.16338584{txt}  {c |}
+  1,173 {c |}  {res}57.62228735{txt}  {c |}
+  1,174 {c |}  {res}52.32732854{txt}  {c |}
+  1,175 {c |}  {res}49.52534824{txt}  {c |}
+  1,176 {c |}  {res}51.42904635{txt}  {c |}
+  1,177 {c |}  {res}44.38465563{txt}  {c |}
+  1,178 {c |}  {res}42.56958909{txt}  {c |}
+  1,179 {c |}  {res}45.01309393{txt}  {c |}
+  1,180 {c |}  {res}59.44326839{txt}  {c |}
+  1,181 {c |}  {res}42.17505437{txt}  {c |}
+  1,182 {c |}  {res}63.31193091{txt}  {c |}
+  1,183 {c |}  {res}75.43832487{txt}  {c |}
+  1,184 {c |}  {res}57.54206048{txt}  {c |}
+  1,185 {c |}  {res}61.32012839{txt}  {c |}
+  1,186 {c |}  {res}48.02248737{txt}  {c |}
+  1,187 {c |}  {res}28.85988468{txt}  {c |}
+  1,188 {c |}  {res}53.63394339{txt}  {c |}
+  1,189 {c |}  {res}46.15325164{txt}  {c |}
+  1,190 {c |}  {res}31.90469703{txt}  {c |}
+  1,191 {c |}  {res}53.26315083{txt}  {c |}
+  1,192 {c |}  {res}50.04919684{txt}  {c |}
+  1,193 {c |}  {res}52.19704807{txt}  {c |}
+  1,194 {c |}  {res}61.32975571{txt}  {c |}
+  1,195 {c |}  {res}62.64086322{txt}  {c |}
+  1,196 {c |}  {res}31.35814727{txt}  {c |}
+  1,197 {c |}  {res}31.87515211{txt}  {c |}
+  1,198 {c |}  {res}56.08622065{txt}  {c |}
+  1,199 {c |}  {res}64.66642799{txt}  {c |}
+  1,200 {c |}  {res}42.59652122{txt}  {c |}
+  1,201 {c |}  {res}73.34895604{txt}  {c |}
+  1,202 {c |}  {res}64.04732664{txt}  {c |}
+  1,203 {c |}  {res} 40.1765761{txt}  {c |}
+  1,204 {c |}  {res}36.54063119{txt}  {c |}
+  1,205 {c |}  {res}35.21113281{txt}  {c |}
+  1,206 {c |}  {res}39.90668216{txt}  {c |}
+  1,207 {c |}  {res}68.58982568{txt}  {c |}
+  1,208 {c |}  {res}55.51837256{txt}  {c |}
+  1,209 {c |}  {res}48.43955728{txt}  {c |}
+  1,210 {c |}  {res}47.38558958{txt}  {c |}
+  1,211 {c |}  {res}53.08028246{txt}  {c |}
+  1,212 {c |}  {res}42.34410095{txt}  {c |}
+  1,213 {c |}  {res}45.73084625{txt}  {c |}
+  1,214 {c |}  {res} 49.9288955{txt}  {c |}
+  1,215 {c |}  {res} 36.9579818{txt}  {c |}
+  1,216 {c |}  {res}47.74983976{txt}  {c |}
+  1,217 {c |}  {res}65.24970798{txt}  {c |}
+  1,218 {c |}  {res}55.30919149{txt}  {c |}
+  1,219 {c |}  {res}70.60671931{txt}  {c |}
+  1,220 {c |}  {res}55.49655368{txt}  {c |}
+  1,221 {c |}  {res}67.11199784{txt}  {c |}
+  1,222 {c |}  {res}47.73549156{txt}  {c |}
+  1,223 {c |}  {res}65.97731126{txt}  {c |}
+  1,224 {c |}  {res}61.48276006{txt}  {c |}
+  1,225 {c |}  {res} 68.2786417{txt}  {c |}
+  1,226 {c |}  {res} 47.4745408{txt}  {c |}
+  1,227 {c |}  {res}45.18012569{txt}  {c |}
+  1,228 {c |}  {res}61.26741038{txt}  {c |}
+  1,229 {c |}  {res}28.23831381{txt}  {c |}
+  1,230 {c |}  {res}34.81782936{txt}  {c |}
+  1,231 {c |}  {res}52.75953209{txt}  {c |}
+  1,232 {c |}  {res}42.24471327{txt}  {c |}
+  1,233 {c |}  {res}25.39089933{txt}  {c |}
+  1,234 {c |}  {res}63.99275992{txt}  {c |}
+  1,235 {c |}  {res}70.82223944{txt}  {c |}
+  1,236 {c |}  {res} 50.9045169{txt}  {c |}
+  1,237 {c |}  {res}53.98986502{txt}  {c |}
+  1,238 {c |}  {res}48.75722754{txt}  {c |}
+  1,239 {c |}  {res}64.78529665{txt}  {c |}
+  1,240 {c |}  {res}42.30210987{txt}  {c |}
+  1,241 {c |}  {res} 46.4089099{txt}  {c |}
+  1,242 {c |}  {res}52.79569602{txt}  {c |}
+  1,243 {c |}  {res}40.09180073{txt}  {c |}
+  1,244 {c |}  {res} 34.2847358{txt}  {c |}
+  1,245 {c |}  {res}46.27714307{txt}  {c |}
+  1,246 {c |}  {res}33.28721426{txt}  {c |}
+  1,247 {c |}  {res}45.58059468{txt}  {c |}
+  1,248 {c |}  {res}41.74638729{txt}  {c |}
+  1,249 {c |}  {res}60.35949808{txt}  {c |}
+  1,250 {c |}  {res}36.43183812{txt}  {c |}
+  1,251 {c |}  {res}51.66589266{txt}  {c |}
+  1,252 {c |}  {res}52.52856568{txt}  {c |}
+  1,253 {c |}  {res}46.57978456{txt}  {c |}
+  1,254 {c |}  {res}54.10219302{txt}  {c |}
+  1,255 {c |}  {res} 35.1099096{txt}  {c |}
+  1,256 {c |}  {res}69.32539741{txt}  {c |}
+  1,257 {c |}  {res}65.67053474{txt}  {c |}
+  1,258 {c |}  {res}44.73429611{txt}  {c |}
+  1,259 {c |}  {res} 57.8290272{txt}  {c |}
+  1,260 {c |}  {res}42.68067305{txt}  {c |}
+  1,261 {c |}  {res}38.15092427{txt}  {c |}
+  1,262 {c |}  {res}52.14904366{txt}  {c |}
+  1,263 {c |}  {res}62.55128104{txt}  {c |}
+  1,264 {c |}  {res}73.06351324{txt}  {c |}
+  1,265 {c |}  {res} 45.2775311{txt}  {c |}
+  1,266 {c |}  {res}35.76990765{txt}  {c |}
+  1,267 {c |}  {res} 66.3574001{txt}  {c |}
+  1,268 {c |}  {res}59.70430701{txt}  {c |}
+  1,269 {c |}  {res}45.34508452{txt}  {c |}
+  1,270 {c |}  {res}75.14473146{txt}  {c |}
+  1,271 {c |}  {res}48.39439318{txt}  {c |}
+  1,272 {c |}  {res}61.89421786{txt}  {c |}
+  1,273 {c |}  {res} 59.6424547{txt}  {c |}
+  1,274 {c |}  {res}52.45293513{txt}  {c |}
+  1,275 {c |}  {res}65.45101774{txt}  {c |}
+  1,276 {c |}  {res}51.46706136{txt}  {c |}
+  1,277 {c |}  {res}52.72669306{txt}  {c |}
+  1,278 {c |}  {res}54.85916713{txt}  {c |}
+  1,279 {c |}  {res}43.38261904{txt}  {c |}
+  1,280 {c |}  {res}52.29852189{txt}  {c |}
+  1,281 {c |}  {res}59.95585266{txt}  {c |}
+  1,282 {c |}  {res} 41.3437059{txt}  {c |}
+  1,283 {c |}  {res}43.73799107{txt}  {c |}
+  1,284 {c |}  {res}40.22292299{txt}  {c |}
+  1,285 {c |}  {res}50.60691065{txt}  {c |}
+  1,286 {c |}  {res}38.41055481{txt}  {c |}
+  1,287 {c |}  {res}40.65056824{txt}  {c |}
+  1,288 {c |}  {res}45.27708201{txt}  {c |}
+  1,289 {c |}  {res}59.55730315{txt}  {c |}
+  1,290 {c |}  {res}49.84172708{txt}  {c |}
+  1,291 {c |}  {res}38.21293954{txt}  {c |}
+  1,292 {c |}  {res}53.53128641{txt}  {c |}
+  1,293 {c |}  {res}31.68108279{txt}  {c |}
+  1,294 {c |}  {res} 53.8716808{txt}  {c |}
+  1,295 {c |}  {res}44.92999244{txt}  {c |}
+  1,296 {c |}  {res}63.96337267{txt}  {c |}
+  1,297 {c |}  {res}47.87670146{txt}  {c |}
+  1,298 {c |}  {res}30.25743909{txt}  {c |}
+  1,299 {c |}  {res}42.90252129{txt}  {c |}
+  1,300 {c |}  {res}47.25003091{txt}  {c |}
+  1,301 {c |}  {res} 44.3688586{txt}  {c |}
+  1,302 {c |}  {res}74.33647722{txt}  {c |}
+  1,303 {c |}  {res}60.90398422{txt}  {c |}
+  1,304 {c |}  {res}46.65519214{txt}  {c |}
+  1,305 {c |}  {res}60.34799072{txt}  {c |}
+  1,306 {c |}  {res}48.58073454{txt}  {c |}
+  1,307 {c |}  {res}47.80426079{txt}  {c |}
+  1,308 {c |}  {res}44.24646584{txt}  {c |}
+  1,309 {c |}  {res} 57.4507676{txt}  {c |}
+  1,310 {c |}  {res}55.24397232{txt}  {c |}
+  1,311 {c |}  {res}46.71703934{txt}  {c |}
+  1,312 {c |}  {res}51.26519136{txt}  {c |}
+  1,313 {c |}  {res}37.75999936{txt}  {c |}
+  1,314 {c |}  {res}77.39272373{txt}  {c |}
+  1,315 {c |}  {res}50.26750582{txt}  {c |}
+  1,316 {c |}  {res}45.60272506{txt}  {c |}
+  1,317 {c |}  {res}64.03163075{txt}  {c |}
+  1,318 {c |}  {res}42.05208761{txt}  {c |}
+  1,319 {c |}  {res}45.33605948{txt}  {c |}
+  1,320 {c |}  {res}59.71750187{txt}  {c |}
+  1,321 {c |}  {res}58.64266283{txt}  {c |}
+  1,322 {c |}  {res}43.17695826{txt}  {c |}
+  1,323 {c |}  {res}44.32379685{txt}  {c |}
+  1,324 {c |}  {res}60.01553793{txt}  {c |}
+  1,325 {c |}  {res} 44.5253773{txt}  {c |}
+  1,326 {c |}  {res}32.37751205{txt}  {c |}
+  1,327 {c |}  {res}55.57729566{txt}  {c |}
+  1,328 {c |}  {res}51.41733348{txt}  {c |}
+  1,329 {c |}  {res}57.18076239{txt}  {c |}
+  1,330 {c |}  {res}71.20415646{txt}  {c |}
+  1,331 {c |}  {res}65.78433859{txt}  {c |}
+  1,332 {c |}  {res}65.25823057{txt}  {c |}
+  1,333 {c |}  {res}46.22687503{txt}  {c |}
+  1,334 {c |}  {res}46.01524194{txt}  {c |}
+  1,335 {c |}  {res}62.23686756{txt}  {c |}
+  1,336 {c |}  {res}46.61059626{txt}  {c |}
+  1,337 {c |}  {res}44.77650874{txt}  {c |}
+  1,338 {c |}  {res}71.26569444{txt}  {c |}
+  1,339 {c |}  {res}46.10226025{txt}  {c |}
+  1,340 {c |}  {res}34.72364029{txt}  {c |}
+  1,341 {c |}  {res}46.63299848{txt}  {c |}
+  1,342 {c |}  {res} 48.6586074{txt}  {c |}
+  1,343 {c |}  {res}51.31562536{txt}  {c |}
+  1,344 {c |}  {res}36.48132367{txt}  {c |}
+  1,345 {c |}  {res}43.59092784{txt}  {c |}
+  1,346 {c |}  {res}52.41290367{txt}  {c |}
+  1,347 {c |}  {res}56.37599638{txt}  {c |}
+  1,348 {c |}  {res}42.94397372{txt}  {c |}
+  1,349 {c |}  {res}65.34037717{txt}  {c |}
+  1,350 {c |}  {res} 48.3806251{txt}  {c |}
+  1,351 {c |}  {res}51.89617382{txt}  {c |}
+  1,352 {c |}  {res}26.66404659{txt}  {c |}
+  1,353 {c |}  {res}46.75832403{txt}  {c |}
+  1,354 {c |}  {res}44.24068198{txt}  {c |}
+  1,355 {c |}  {res}53.82980848{txt}  {c |}
+  1,356 {c |}  {res}55.43976236{txt}  {c |}
+  1,357 {c |}  {res}47.48090242{txt}  {c |}
+  1,358 {c |}  {res}48.71349721{txt}  {c |}
+  1,359 {c |}  {res}61.33777091{txt}  {c |}
+  1,360 {c |}  {res}57.27701568{txt}  {c |}
+  1,361 {c |}  {res}61.79564169{txt}  {c |}
+  1,362 {c |}  {res}75.73237563{txt}  {c |}
+  1,363 {c |}  {res}49.38895526{txt}  {c |}
+  1,364 {c |}  {res}40.34547936{txt}  {c |}
+  1,365 {c |}  {res}44.58393613{txt}  {c |}
+  1,366 {c |}  {res}48.31955764{txt}  {c |}
+  1,367 {c |}  {res} 53.9441809{txt}  {c |}
+  1,368 {c |}  {res}56.76482409{txt}  {c |}
+  1,369 {c |}  {res}30.72587501{txt}  {c |}
+  1,370 {c |}  {res}47.85913283{txt}  {c |}
+  1,371 {c |}  {res}40.28255087{txt}  {c |}
+  1,372 {c |}  {res}51.84769875{txt}  {c |}
+  1,373 {c |}  {res}53.52922064{txt}  {c |}
+  1,374 {c |}  {res}41.93728703{txt}  {c |}
+  1,375 {c |}  {res}45.34391966{txt}  {c |}
+  1,376 {c |}  {res}41.50764318{txt}  {c |}
+  1,377 {c |}  {res}44.73124443{txt}  {c |}
+  1,378 {c |}  {res}43.84175321{txt}  {c |}
+  1,379 {c |}  {res}62.79876934{txt}  {c |}
+  1,380 {c |}  {res}47.63977442{txt}  {c |}
+  1,381 {c |}  {res}51.06799611{txt}  {c |}
+  1,382 {c |}  {res}30.63029248{txt}  {c |}
+  1,383 {c |}  {res}54.40149286{txt}  {c |}
+        {c BLC}{hline 15}{c BRC}
+
+{com}: 
+: end
+{txt}{hline}
+
+{com}.    
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\Administrator\OneDrive\World Bank\2result.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}22 Oct 2018, 18:27:05
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
